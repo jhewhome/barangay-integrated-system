@@ -200,6 +200,54 @@ Commit **example** config files only (`gawad_integration.local.example.php`, bas
 
 ---
 
+## Databases — what goes on GitHub?
+
+You do **not** upload the live databases themselves. MySQL and MongoDB store data on your PC/server, not inside the Git repo.
+
+| Upload to GitHub? | Item | Why |
+|-------------------|------|-----|
+| **Yes** | `bhc-system/database_schema.sql` | Empty table structure + default stations — reviewers need this to set up BHC |
+| **Yes** | `bhc-system/config/database.php` | Connection settings (host, db name) — no patient data |
+| **Yes** | Gawad `appsettings.json` | MongoDB URL template (`mongodb://127.0.0.1:27017`) — no resident records |
+| **Yes** | `bhc-system/scripts/seed_*.php` | Optional dev scripts to generate sample data locally |
+| **No** | MySQL data dump (`mysqldump` with patients, queues, users) | Privacy + size; contains real or test PHI |
+| **No** | MongoDB dump (`mongodump`, `.bson` files) | Same — residents, medicines, user accounts |
+| **No** | XAMPP `mysql/data/` folder | Raw database files on disk |
+| **No** | MongoDB `data/` directory | Raw database files on disk |
+
+### BHC (MySQL — `brgy_health_db`)
+
+1. Clone the repo.
+2. Create database: `brgy_health_db`
+3. Import schema only:
+   ```powershell
+   mysql -u root brgy_health_db < bhc-system\database_schema.sql
+   ```
+4. Start the app — `config/database.php` also runs `ensureSchema()` for any missing columns.
+5. First login: **admin** / **admin123** (auto-created if no users exist).
+
+Optional sample data (local dev only):
+```powershell
+cd bhc-system
+php scripts/seed_dummy_patients.php
+php scripts/seed_clinical_data.php
+```
+
+### Gawad BIS (MongoDB — `gawad_db`)
+
+1. Start MongoDB.
+2. Run Gawad — it creates collections on first use.
+3. `SeedDataHostedService` seeds initial roles/admin on first run (see Gawad deploy docs in `gawad-bis/`).
+
+Each developer or reviewer creates their **own** local database from schema + seeds — they do not download your data from GitHub.
+
+### For thesis / demo submission
+
+- Document setup steps (already in this README and `bhc-system/docs/`).
+- Optionally include **anonymized** sample export in a separate zip **outside** GitHub if required — never commit real barangay resident or patient names from production.
+
+---
+
 ## License / academic use
 
 Developed for Barangay Balong Bato, San Juan City. Refer to your course or barangay authority for distribution terms.

@@ -96,3 +96,12 @@ coverage*/
 *.tmp
 *.temp
 bhc-system/scripts/_c.txt
+
+# --- Database dumps (data files — do not commit) ---
+*.dump
+**/dumps/
+**/mongodb-backup/
+**/mysql-backup/
+**/*_backup.sql
+**/*_data.sql
+**/*.bson
