@@ -5,6 +5,8 @@ Barangay Balong Bato, San Juan City
 
 Unified GitHub repository for barangay resident records, health center patient registry, multi-station queues, and clinical workflow — with integration between both applications.
 
+> **PDF for reviewers:** [README.pdf](README.pdf) — printable overview of this repository (setup, structure, integration).
+
 **Local path:** `C:\PUP\barangay-integrated-system-repo`
 
 ---
@@ -14,6 +16,7 @@ Unified GitHub repository for barangay resident records, health center patient r
 ```
 barangay-integrated-system-repo/
 ├── README.md                 ← this file
+├── README.pdf                ← PDF overview for reviewers / thesis
 ├── .gitignore
 ├── start-gawad.ps1           ← start Gawad BIS (local dev)
 ├── bhc-system/               ← BHC (PHP 8+ / MySQL)
@@ -36,11 +39,10 @@ barangay-integrated-system-repo/
 
 ## Documentation
 
-All guides live in **`bhc-system/docs/`**:
-
 | Document | Description |
 |----------|-------------|
-| [bhc-system/docs/README.md](bhc-system/docs/README.md) | Documentation index |
+| **[README.pdf](README.pdf)** | **Start here (PDF)** — repository overview for reviewers and thesis panel |
+| [bhc-system/docs/README.md](bhc-system/docs/README.md) | Full documentation index (Markdown guides) |
 | [bhc-system/docs/USER_GUIDE.md](bhc-system/docs/USER_GUIDE.md) | BHC operations (queues, clinical workflow, doctor portal) |
 | [bhc-system/docs/INTEGRATED_USER_GUIDE.md](bhc-system/docs/INTEGRATED_USER_GUIDE.md) | Gawad ↔ BHC integration (SSO, resident handoff, medicine sync) |
 | [bhc-system/docs/SOURCE_CODE_AND_DOCUMENTATION.md](bhc-system/docs/SOURCE_CODE_AND_DOCUMENTATION.md) | Architecture, APIs, setup (technical) |
