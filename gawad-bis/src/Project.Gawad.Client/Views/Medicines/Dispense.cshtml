@@ -1,0 +1,283 @@
+@model Project.Gawad.Domain.Objects.Medicine.CreateMedicineTransactionObject
+@{
+    ViewData["Title"] = "Dispense Medicine";
+    ViewData["HeaderTitle"] = "Dispense Medicine";
+    
+    // Get medicine information from ViewBag
+    var medicine = ViewBag.Medicine as Project.Gawad.Domain.Objects.Medicine.MedicineDetailObject;
+    var currentStock = medicine?.TotalStock ?? 0;
+    var minimumStock = medicine?.MinimumStockLevel ?? 0;
+    var availableForDispense = Math.Max(0, currentStock - minimumStock);
+    var isLowStock = medicine?.IsLowStock ?? false;
+    var stockStatusClass = currentStock <= 0 ? "danger" : (isLowStock ? "warning" : "success");
+    var stockStatusText = currentStock <= 0 ? "Out of Stock" : (isLowStock ? "Low Stock" : "In Stock");
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="~/select2/select2.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2-bootstrap4.min.css"/>
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Dispense Medicine</h3>
+        </div>
+        <form asp-action="Dispense" method="post">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TransactionType" />
+                
+                <!-- Warning Notifications -->
+                <div id="medicineWarnings" style="display: none;">
+                    <div id="lowStockWarning" class="alert alert-warning" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Low Stock Warning:</strong> 
+                        <span id="lowStockMessage"></span>
+                    </div>
+                    <div id="allocationLimitWarning" class="alert alert-info" style="display: none;">
+                        <i class="fas fa-info-circle"></i> <strong>Allocation Limit:</strong> 
+                        <span id="allocationLimitMessage"></span>
+                    </div>
+                </div>
+                
+                <!-- Stock Status Information -->
+                @if (medicine != null)
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="alert alert-@stockStatusClass">
+                                <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Stock Status: @stockStatusText</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Current Stock:</strong><br>
+                                        <span class="h4">@currentStock.ToString("N0")</span> <small>pieces</small>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Minimum Stock Level:</strong><br>
+                                        <span class="h5">@minimumStock.ToString("N0")</span> <small>pieces</small>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Available for Dispense:</strong><br>
+                                        <span class="h4 text-primary" id="availableStock">@availableForDispense.ToString("N0")</span> <small>pieces</small>
+                                    </div>
+                                </div>
+                                @if (currentStock <= 0)
+                                {
+                                    <div class="mt-2">
+                                        <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> Cannot dispense. Stock is zero. Please add stock first.
+                                    </div>
+                                }
+                                else if (isLowStock)
+                                {
+                                    <div class="mt-2">
+                                        <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> Stock is low. Consider replenishing soon.
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+                <!-- Medicine Information -->
+                @if (medicine != null)
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="card card-info card-outline">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0"><i class="fas fa-pills"></i> Medicine Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <strong>Medicine Name:</strong>
+                                            <h4 class="text-primary">@medicine.Name</h4>
+                                            @if (!string.IsNullOrWhiteSpace(medicine.GenericName))
+                                            {
+                                                <small class="text-muted">Generic: @medicine.GenericName</small>
+                                            }
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Category:</strong> @medicine.CategoryName<br>
+                                            @if (!string.IsNullOrWhiteSpace(medicine.Manufacturer))
+                                            {
+                                                <strong>Manufacturer:</strong> @medicine.Manufacturer<br>
+                                            }
+                                            <strong>Unit of Measure:</strong> @medicine.UnitOfMeasureName
+                                        </div>
+                                    </div>
+                                    <input type="hidden" asp-for="MedicineId" id="medicineIdInput" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="MedicineId">Medicine ID</label>
+                                <input asp-for="MedicineId" class="form-control" readonly id="medicineIdInput" />
+                                <span asp-validation-for="MedicineId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Quantity">Quantity (Pieces)</label>
+                            <input asp-for="Quantity" class="form-control" type="number" step="1" min="1" max="@currentStock" id="Quantity" placeholder="Enter number of pieces to dispense" required />
+                            <small class="form-text text-muted">
+                                Enter the number of individual pieces/units to dispense
+                                @if (currentStock > 0)
+                                {
+                                    <span class="text-info">(Maximum: @currentStock pieces)</span>
+                                }
+                            </small>
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                            <div id="quantityValidationMessage" class="text-danger mt-1" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+                @if (medicine != null && medicine.UnitPrice.HasValue)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <strong>Unit Price:</strong> 
+                                <span>₱@medicine.UnitPrice.Value.ToString("N2") per @(medicine.UnitOfMeasureName?.ToLower() ?? "unit")</span>
+                                <br />
+                                <small class="text-muted">Note: Quantity is entered in pieces. Stock will be deducted by the number of pieces entered.</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Recipient Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="recipientType" id="recipientTypeResident" value="resident" checked>
+                                <label class="form-check-label" for="recipientTypeResident">
+                                    Resident
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="recipientType" id="recipientTypeNonResident" value="nonresident">
+                                <label class="form-check-label" for="recipientTypeNonResident">
+                                    Non-Resident (with Prescription)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="recipientType" id="recipientTypeNonResidentNoPrescription" value="nonresidentnoprescription">
+                                <label class="form-check-label" for="recipientTypeNonResidentNoPrescription">
+                                    Non-Resident (without Prescription)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="TransactionDate"></label>
+                            <input asp-for="TransactionDate" class="form-control" type="datetime-local" />
+                            <span asp-validation-for="TransactionDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="residentRecipientSection">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="RecipientName">Recipient (Resident)</label>
+                            <select id="recipientSelect" class="form-control select2bs4" style="width: 100%;" data-placeholder="Type to search for a resident...">
+                                <option></option>
+                            </select>
+                            <input type="hidden" asp-for="RecipientPersonId" id="RecipientPersonId" />
+                            <input type="hidden" asp-for="RecipientName" id="RecipientName" />
+                            <span asp-validation-for="RecipientName" class="text-danger"></span>
+                            <span asp-validation-for="RecipientPersonId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="nonResidentRecipientSection" style="display: none;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nonResidentName">Recipient Name (Non-Resident)</label>
+                            <input type="text" class="form-control" id="nonResidentName" placeholder="Enter recipient name" />
+                            <small class="form-text text-muted">Enter the name of the non-resident recipient</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Prescription">Prescription Number/Details</label>
+                            <input asp-for="Prescription" class="form-control" type="text" id="prescriptionInput" placeholder="Enter prescription number or details" />
+                            <small class="form-text text-muted" id="prescriptionHelpText">Required for non-residents with prescription</small>
+                            <span asp-validation-for="Prescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Reason">Reason for Dispense</label>
+                            <input asp-for="Reason" class="form-control" type="text" placeholder="Enter reason for dispensing this medicine (e.g., Patient complaint, Prescription, etc.)" />
+                            <small class="form-text text-muted">Optional: Provide a reason or purpose for dispensing this medicine</small>
+                            <span asp-validation-for="Reason" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Notes">Additional Notes</label>
+                            <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Enter any additional notes or remarks (optional)"></textarea>
+                            <small class="form-text text-muted">Optional: Add any additional notes or remarks about this dispense</small>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Dispense</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/select2/select2.full.min.js"></script>
+    <script type="text/javascript">
+        // Pass stock information from server to JavaScript
+        @if (medicine != null)
+        {
+            <text>
+            var medicineStockInfo = {
+                currentStock: @currentStock,
+                minimumStock: @minimumStock,
+                availableForDispense: @availableForDispense,
+                medicineName: '@Html.Raw(medicine.Name.Replace("'", "\\'"))'
+            };
+            </text>
+        }
+        else
+        {
+            <text>
+            var medicineStockInfo = {
+                currentStock: 0,
+                minimumStock: 0,
+                availableForDispense: 0,
+                medicineName: ''
+            };
+            </text>
+        }
+    </script>
+    <script src="~/app/js/medicines-dispense.js"></script>
+}
+

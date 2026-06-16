@@ -1,0 +1,79 @@
+﻿@using Microsoft.Extensions.Options
+@using Project.Gawad.Application.Options
+@inject IOptions<AppConfigOption> AppConfigOption
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="@AppConfigOption.Value.AppName">
+    <meta name="author" content="PUP MSIT">
+    <title>@ViewBag.Title - @AppConfigOption.Value.AppName</title>
+    <link rel="stylesheet" href="~/fontsource/index.css"/>
+    <link rel="stylesheet" href="~/overlayscrollbars/overlayscrollbars.min.css"/>
+    <link rel="stylesheet" href="~/bootstrap-icons/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="~/adminlte/css/adminlte.css"/>
+    <link rel="stylesheet" href="~/app/css/app.css"/>
+    @RenderSection("StyleSheets", false)
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<!--begin::App Wrapper-->
+<div class="app-wrapper">
+    <!--begin::Header-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_NavbarPartialView.cshtml")
+    <!--end::Header-->
+
+    <!-- start::SideBar -->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_SideBarPartialView.cshtml")
+    <!-- end::SideBar -->
+
+    <!--begin::App Main-->
+    <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Row-->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0">@ViewBag.HeaderTitle</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        @RenderSection("NavigationCrumbs", false)
+                    </div>
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::App Content Header-->
+        <!--start::App Content-->
+        <div class="app-content">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::App Content-->
+    </main>
+    <!--end::App Main-->
+
+    <!-- start::Footer -->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_FooterPartialView.cshtml")
+    <!-- end::Footer -->
+
+</div> <!--end::App Wrapper-->
+
+<!--begin::Script-->
+<script src="~/overlayscrollbars/overlayscrollbars.browser.es6.min.js"></script>
+<script src="~/popper/popper.min.js"></script>
+<script src="~/bootstrap/bootstrap.min.js"></script>
+<script src="~/adminlte/js/adminlte.js"></script>
+<!--end::Script-->
+
+@RenderSection("Scripts", false)
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+@model Project.Gawad.Domain.Objects.Medicine.ReportFilterObject
+@using Project.Gawad.Core.Extensions
+@{
+    ViewData["Title"] = "Stock Status Report";
+    ViewData["HeaderTitle"] = "Medicine Stock Status Report";
+    var reportData = ViewBag.ReportData as IEnumerable<Project.Gawad.Domain.Objects.Medicine.MedicineStockStatusReportObject>;
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Generate Stock Status Report</h3>
+        </div>
+        <form asp-action="StockStatusReport" method="post">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Category"></label>
+                            <select asp-for="Category" class="form-control">
+                                <option value="">All Categories</option>
+                                @foreach (Project.Gawad.Domain.Enums.Medicine.MedicineCategory cat in Enum.GetValues(typeof(Project.Gawad.Domain.Enums.Medicine.MedicineCategory)))
+                                {
+                                    <option value="@cat">@cat.GetEnumDisplayName()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="IncludeInactive" value="true" @(Model?.IncludeInactive == true ? "checked=\"checked\"" : "") /> Include Inactive Medicines
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Generate Report</button>
+                        @if (reportData != null)
+                        {
+                            <a href="@Url.Action("ExportStockStatusReport", new { Category = Model?.Category, IncludeInactive = Model?.IncludeInactive })" class="btn btn-success">Export CSV</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    @if (reportData != null)
+    {
+        <div class="card card-primary card-outline mt-3">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.ReportTitle</h3>
+                <div class="card-tools">
+                    <small>Generated: @ViewBag.GeneratedDate.ToString("MM/dd/yyyy HH:mm")</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Minimum Stock</th>
+                            <th>Status</th>
+                            <th>Expiring Soon</th>
+                            <th>Expired</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in reportData)
+                        {
+                            <tr>
+                                <td>@item.MedicineName</td>
+                                <td>@item.Category</td>
+                                <td>@item.CurrentStock</td>
+                                <td>@item.MinimumStockLevel</td>
+                                <td><span class="badge bg-@(item.Status == "Normal" ? "success" : item.Status == "Low Stock" ? "warning" : "danger")">@item.Status</span></td>
+                                <td>@item.ExpiringSoonCount</td>
+                                <td>@item.ExpiredCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+

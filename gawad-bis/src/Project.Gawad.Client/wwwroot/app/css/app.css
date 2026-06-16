@@ -1,0 +1,395 @@
+.field-validation-error {
+    color: red;
+}
+
+/* Fix sidebar toggle and main content adjustment */
+.app-wrapper {
+    position: relative;
+    /* Ensure footer can stick to bottom when content is short */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Allow header (Sign out) to stay visible above expanded submenus */
+    overflow: visible;
+    /* Solid dark tone to match sidebar */
+    background-color: #2b3035 !important;
+}
+
+.app-sidebar {
+    position: fixed !important;
+    top: 57.6px; /* Header height */
+    left: 0;
+    bottom: 0;
+    height: calc(100vh - 57.6px) !important;
+    /* Let the inner wrapper handle scrolling; prevent background bleed/white gap */
+    overflow: hidden;
+    z-index: 1000;
+    transition: width 0.3s ease-in-out;
+    width: 250px;
+    /* Ensure sidebar extends to bottom edge with proper background */
+    background-color: #2b3035;
+}
+
+/* Keep top navbar above sidebar/submenus so Sign out stays visible */
+.main-header {
+    position: relative;
+    z-index: 1102;
+}
+
+/* Ensure submenu layers do not overlay the header */
+.app-sidebar .nav-treeview {
+    position: relative;
+    z-index: 1000;
+}
+
+.app-main {
+    margin-left: 250px;
+    flex: 1;
+    transition: margin-left 0.3s ease-in-out;
+    /* Avoid viewport-based min-height that can leave a white gap */
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bs-body-bg);
+}
+
+/* Align footer with main content (account for sidebar width) */
+.app-footer {
+    position: relative;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    background-color: var(--bs-body-bg) !important; /* Keep footer on body background, not app-wrapper */
+    z-index: 1;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+    /* Ensure footer doesn't visually overlap sidebar */
+    clear: both;
+    /* Stick to bottom when content is short */
+    margin-top: auto;
+}
+
+/* Prevent footer background from showing through sidebar */
+.app-sidebar ~ .app-footer {
+    z-index: 999;
+}
+
+/* When sidebar is collapsed (sidebar-mini) - AdminLTE classes */
+body.sidebar-mini .app-sidebar {
+    width: 70px !important;
+}
+
+body.sidebar-mini .app-main {
+    margin-left: 70px !important;
+}
+
+/* No horizontal offset when centered fixed */
+
+/* Sidebar collapse state */
+.sidebar-collapse .app-sidebar {
+    width: 70px !important;
+}
+
+.sidebar-collapse .app-main {
+    margin-left: 70px !important;
+}
+
+/* No horizontal offset when centered fixed */
+
+/* Mobile responsive - sidebar overlay */
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        transform: translateX(-100%);
+        width: 250px !important;
+    }
+    
+    .app-main {
+        margin-left: 0 !important;
+    }
+
+    .app-footer {
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+/* Prevent footer overlap with page content */
+.app-content {
+    padding-bottom: 56px; /* approximate footer height */
+}
+    
+    /* Show sidebar when toggled on mobile */
+    .sidebar-open .app-sidebar {
+        transform: translateX(0);
+    }
+    
+    /* Overlay when sidebar is open on mobile */
+    .sidebar-open::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+}
+
+/* Ensure sidebar content doesn't overflow */
+.app-sidebar .sidebar-wrapper {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Reserve space so bottom items (e.g., Sign out) remain visible */
+    padding-bottom: 96px;
+    scroll-padding-bottom: 24px;
+    scrollbar-gutter: stable both-edges;
+    margin-bottom: 0;
+    background-color: #2b3035;
+}
+
+/* Provide minimal breathing room without creating a visible block */
+.app-sidebar .sidebar-menu {
+    padding-bottom: 0.75rem;
+    background-color: #2b3035;
+}
+
+/* Match scrollbar visuals to sidebar background to avoid white track showing */
+.app-sidebar .sidebar-wrapper::-webkit-scrollbar {
+    width: 10px;
+}
+.app-sidebar .sidebar-wrapper::-webkit-scrollbar-track {
+    background: var(--bs-body-bg);
+}
+.app-sidebar .sidebar-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.25);
+    border-radius: 8px;
+    border: 2px solid var(--bs-body-bg);
+}
+
+.app-sidebar .sidebar-menu {
+    padding: 0.5rem 0;
+    list-style: none;
+    margin: 0;
+}
+
+/* Fix sidebar menu items */
+.app-sidebar .nav-item {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.app-sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.app-sidebar .nav-link p {
+    margin: 0;
+    padding-left: 0.5rem;
+    white-space: nowrap;
+}
+
+/* When collapsed, show only icons */
+.sidebar-collapse .app-sidebar .nav-link p,
+body.sidebar-mini .app-sidebar .nav-link p {
+    display: none;
+}
+
+.sidebar-collapse .app-sidebar .nav-link .nav-icon,
+body.sidebar-mini .app-sidebar .nav-link .nav-icon {
+    margin: 0 auto;
+}
+
+/* Ensure app content doesn't overflow */
+.app-content {
+    flex: 1;
+    padding: 1rem 0;
+    overflow-x: hidden;
+    /* No extra bottom space so footer sits flush */
+    padding-bottom: 0;
+}
+
+/* Add spacing above primary buttons to improve layout rhythm */
+.app-content .btn.btn-primary {
+    margin-top: 0.5rem;
+}
+
+/* Match spacing for success buttons (e.g., Export CSV) */
+.app-content .btn.btn-success {
+    margin-top: 0.5rem;
+}
+
+/* Do not add top spacing for primary buttons in card footers (e.g., Save, Add Stock) */
+.app-content .card-footer .btn.btn-primary {
+    margin-top: 0;
+}
+
+/* Do not add top spacing for success buttons in card footers */
+.app-content .card-footer .btn.btn-success {
+    margin-top: 0;
+}
+
+/* Match spacing for warning buttons (e.g., Low Stock) */
+.app-content .btn.btn-warning {
+    margin-top: 0.5rem;
+}
+
+/* Do not add top spacing for warning buttons in card footers */
+.app-content .card-footer .btn.btn-warning {
+    margin-top: 0;
+}
+
+/* Fix container fluid to work with sidebar */
+.app-content .container-fluid {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Ensure smooth transitions for sidebar and main content */
+.app-sidebar {
+    transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.app-main {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Prevent content overflow when sidebar toggles */
+.app-content {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fix for treeview menus in sidebar */
+.app-sidebar .nav-treeview {
+    max-width: 100%;
+    /* Allow submenu to expand beyond parent li without being cut */
+    overflow: visible;
+}
+
+/* Distinction styles between main menu and submenu */
+.app-sidebar .nav > .nav-item > .nav-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.app-sidebar .nav .nav-treeview {
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+.app-sidebar .nav .nav-treeview .nav-link {
+    font-size: 0.9rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem; /* greater indent for submenu */
+    background-color: transparent;
+}
+
+.app-sidebar .nav .nav-treeview .nav-link .nav-icon {
+    opacity: 0.85;
+    font-size: 0.95em;
+}
+
+.app-sidebar .nav .nav-treeview .nav-link:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.app-sidebar .nav .nav-treeview .nav-link.active {
+    background-color: rgba(13, 110, 253, 0.12); /* primary tint */
+    border-left: 3px solid #0d6efd;             /* highlight strip */
+    padding-left: calc(2rem - 1px);
+}
+
+/* Optional header label inside submenu */
+.app-sidebar .nav .nav-treeview .nav-header {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: rgba(0,0,0,0.65);
+    padding: 0.5rem 1rem 0.35rem 1.25rem;
+    font-weight: 600;
+}
+
+/* Improve readability on dark themed sidebar */
+.app-sidebar[data-bs-theme="dark"] .nav .nav-treeview .nav-header {
+    color: rgba(255,255,255,0.85);
+}
+
+.app-sidebar.sidebar-mini .nav-treeview {
+    display: none;
+}
+
+/* Tooltip for collapsed sidebar items */
+body.sidebar-mini .app-sidebar .nav-link[data-bs-toggle="tooltip"],
+.sidebar-collapse .app-sidebar .nav-link[data-bs-toggle="tooltip"] {
+    position: relative;
+}
+
+/* Ensure submenu doesn't get cut off when expanded */
+.app-sidebar .menu-open > .nav-treeview {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Match spacing for info buttons (e.g., Generate Report) */
+.app-content .btn.btn-info {
+    margin-top: 0.5rem !important;
+}
+
+/* Specifically target info buttons in card headers/tools */
+.app-content .card-header .card-tools .btn.btn-info,
+.app-content .card .card-header .card-tools .btn.btn-info,
+.card-header .card-tools .btn.btn-info,
+.card-header .card-tools .btn.btn-sm.btn-info {
+    margin-top: 0.5rem !important;
+}
+
+/* Change text color to white for all buttons in card-tools */
+.card-header .card-tools .btn,
+.card-header .card-tools a.btn {
+    color: white !important;
+}
+
+/* Do not add top spacing for info buttons in card footers */
+.app-content .card-footer .btn.btn-info {
+    margin-top: 0 !important;
+}
+
+/* Match spacing for secondary buttons (e.g., Back to Details) */
+.app-content .btn.btn-secondary {
+    margin-top: 0.5rem !important;
+}
+
+/* Do not add top spacing for secondary buttons in card footers */
+.app-content .card-footer .btn.btn-secondary {
+    margin-top: 0 !important;
+}
+
+/* Force show bottles input section when needed */
+#bottlesInputSection.show-bottles {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

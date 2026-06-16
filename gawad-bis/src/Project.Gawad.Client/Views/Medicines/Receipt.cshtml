@@ -1,0 +1,115 @@
+@model Project.Gawad.Domain.Objects.Medicine.MedicineTransactionListObject
+@{
+    ViewData["Title"] = "Dispense Receipt";
+    ViewData["HeaderTitle"] = "Dispense Receipt";
+}
+
+@functions {
+    string GetPrescriptionFromNotes(string? notes)
+    {
+        if (string.IsNullOrWhiteSpace(notes))
+            return null;
+
+        var notesParts = notes.Split(';');
+        foreach (var part in notesParts)
+        {
+            var trimmed = part.Trim();
+            if (trimmed.StartsWith("PRESCRIPTION:", StringComparison.OrdinalIgnoreCase))
+            {
+                return trimmed.Substring(13).Trim();
+            }
+        }
+        return null;
+    }
+}
+
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/pdfobject/pdfobject.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            let id = $("#pdfRenderer").attr("data-id");
+            console.log("Receipt ID:", id);
+
+            if (!id) {
+                $("#pdfRenderer").html('<div class="alert alert-danger">Error: Transaction ID not found.</div>');
+                return;
+            }
+
+            // Use PDFObject.embed same as Transaction Details page
+            var receiptUrl = "/Medicines/ReceiptDocument/" + id;
+            var result = PDFObject.embed(receiptUrl, "#pdfRenderer");
+        });
+    </script>
+}
+
+<div class="row g-4" style="overflow: scroll;">
+    <div class="row">
+        <div class="card card-success card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-receipt-cutoff"></i> &nbsp; Receipt Details</div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Row-->
+                <div class="row g3">
+                    <div class="col-6">
+                        <div class="col-12">
+                            <strong>Transaction ID</strong>: @Model.Id
+                        </div>
+                        <div class="col-12">
+                            <strong>Medicine</strong>: @Model.MedicineName
+                        </div>
+                        <div class="col-12">
+                            <strong>Transaction Type</strong>: @Model.TransactionTypeName
+                        </div>
+                        <div class="col-12">
+                            <strong>Recipient</strong>: @(Model.RecipientName ?? "N/A")
+                        </div>
+                        <div class="col-12">
+                            <strong>Reason</strong>: @(Model.Reason ?? "N/A")
+                        </div>
+                        @{
+                            var prescription = GetPrescriptionFromNotes(Model.Notes);
+                        }
+                        @if (!string.IsNullOrWhiteSpace(prescription))
+                        {
+                            <div class="col-12">
+                                <strong>Prescription</strong>: @prescription
+                            </div>
+                        }
+                    </div>
+                    <div class="col-6">
+                        <div class="col-12">
+                            <strong>Quantity (Pieces)</strong>: @Model.Quantity.ToString("N0")
+                        </div>
+                        <div class="col-12">
+                            <strong>Transaction Date</strong>: @Model.TransactionDate.ToString("MM/dd/yyyy HH:mm")
+                        </div>
+                    </div>
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Body-->
+        </div>
+
+        <div class="card card-success card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-file-earmark-text-fill"></i> Document</div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <div id="pdfRenderer" data-id="@Model.Id" style="height: 500px;"></div>
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
+</div>
+
+

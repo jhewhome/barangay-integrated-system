@@ -1,0 +1,270 @@
+@model Project.Gawad.Domain.Objects.Medicine.ReportFilterObject
+@using Project.Gawad.Core.Extensions
+@{
+    ViewData["Title"] = "Usage Report";
+    ViewData["HeaderTitle"] = "Medicine Usage Report";
+    var reportData = ViewBag.ReportData as IEnumerable<Project.Gawad.Domain.Objects.Medicine.MedicineUsageReportObject>;
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="~/select2/select2.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2-bootstrap4.min.css"/>
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Generate Usage Report</h3>
+        </div>
+        <form asp-action="UsageReport" method="post">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="StartDate"></label>
+                            <input asp-for="StartDate" class="form-control" type="date" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="EndDate"></label>
+                            <input asp-for="EndDate" class="form-control" type="date" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Category"></label>
+                            <select asp-for="Category" class="form-control">
+                                <option value="">All Categories</option>
+                                @foreach (Project.Gawad.Domain.Enums.Medicine.MedicineCategory cat in Enum.GetValues(typeof(Project.Gawad.Domain.Enums.Medicine.MedicineCategory)))
+                                {
+                                    <option value="@cat">@cat.GetEnumDisplayName()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="MedicineId">Medicine (Optional - leave blank for all medicines)</label>
+                            <select id="medicineSelect" class="form-control select2bs4" style="width: 100%;" data-placeholder="Type to search for a medicine...">
+                                <option></option>
+                            </select>
+                            <input type="hidden" asp-for="MedicineId" id="MedicineId" />
+                            <small class="form-text text-muted">Select a specific medicine to filter the report, or leave blank to show all medicines.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Generate Report</button>
+                        @if (reportData != null && Model?.StartDate.HasValue == true && Model?.EndDate.HasValue == true)
+                        {
+                            <a href="@Url.Action("ExportUsageReport", Model)" class="btn btn-success">Export CSV</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    @if (reportData != null)
+    {
+        <div class="card card-primary card-outline mt-3">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.ReportTitle</h3>
+                <div class="card-tools">
+                    <small>Generated: @ViewBag.GeneratedDate.ToString("MM/dd/yyyy HH:mm")</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Total Dispensed</th>
+                            <th># of Transactions</th>
+                            <th>Total Value</th>
+                            <th>First Dispensed</th>
+                            <th>Last Dispensed</th>
+                            <th>Most Common Recipient</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in reportData)
+                        {
+                            <tr>
+                                <td>@item.MedicineName</td>
+                                <td>@item.Category</td>
+                                <td>@item.TotalQuantityDispensed</td>
+                                <td>@item.NumberOfTransactions</td>
+                                <td>@(item.TotalValue?.ToString("F2") ?? "N/A")</td>
+                                <td>@(item.FirstDispensedDate?.ToString("MM/dd/yyyy") ?? "N/A")</td>
+                                <td>@(item.LastDispensedDate?.ToString("MM/dd/yyyy") ?? "N/A")</td>
+                                <td>@item.MostCommonRecipient</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/select2/select2.full.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2 for medicine selection
+            $('#medicineSelect').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Type to search for a medicine...',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('body'),
+                language: {
+                    searching: function() {
+                        return 'Searching medicines...';
+                    },
+                    noResults: function() {
+                        return 'No medicines found';
+                    }
+                },
+                ajax: {
+                    url: '/Medicines/GetMedicinesList',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        var requestData = {
+                            search: params.term || '',
+                            page: params.page || 1,
+                            itemsPerPage: 10,
+                            sortColIndex: 0,
+                            sortColDir: 'asc'
+                        };
+                        return requestData;
+                    },
+                    processResults: function (response) {
+                        // Handle PaginatedRecords response structure
+                        var dataArray = [];
+                        
+                        // Try different possible response structures
+                        if (response.data && Array.isArray(response.data)) {
+                            dataArray = response.data;
+                        } else if (response.Data && Array.isArray(response.Data)) {
+                            dataArray = response.Data;
+                        } else if (Array.isArray(response)) {
+                            dataArray = response;
+                        }
+                        
+                        if (!Array.isArray(dataArray) || dataArray.length === 0) {
+                            return {
+                                results: [],
+                                pagination: {
+                                    more: false
+                                }
+                            };
+                        }
+                        
+                        var hasMore = false;
+                        var recordsFiltered = response.RecordsFiltered || response.recordsFiltered || response.RecordsTotal || response.recordsTotal || 0;
+                        var pageSize = response.PageSize || response.pageSize || 10;
+                        var currentPage = response.PageNumber || response.pageNumber || 1;
+                        
+                        if (recordsFiltered > 0) {
+                            hasMore = (currentPage * pageSize) < recordsFiltered;
+                        } else {
+                            hasMore = dataArray.length === pageSize;
+                        }
+                        
+                        var results = dataArray.map(function (medicine) {
+                            var medicineId = medicine.id || medicine.Id || '';
+                            var medicineName = medicine.name || medicine.Name || 'Unknown Medicine';
+                            
+                            // If ID is an object (ObjectId), get the string value
+                            if (typeof medicineId === 'object' && medicineId !== null) {
+                                medicineId = medicineId.toString ? medicineId.toString() : (medicineId.value || medicineId.$oid || '');
+                            }
+                            
+                            return {
+                                id: String(medicineId),
+                                text: medicineName
+                            };
+                        });
+                        
+                        return {
+                            results: results,
+                            pagination: {
+                                more: hasMore
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1
+            });
+
+            // Update hidden field when medicine is selected
+            $('#medicineSelect').on('select2:select', function (e) {
+                var data = e.params.data;
+                $('#MedicineId').val(data.id);
+            });
+
+            // Clear hidden field when medicine is cleared
+            $('#medicineSelect').on('select2:clear', function (e) {
+                $('#MedicineId').val('');
+            });
+
+            // Pre-select medicine if MedicineId is already set in the model
+            @if (!string.IsNullOrEmpty(Model?.MedicineId))
+            {
+                <text>
+                $.ajax({
+                    url: '/Medicines/GetMedicinesList',
+                    dataType: 'json',
+                    data: {
+                        search: '',
+                        page: 1,
+                        itemsPerPage: 100,
+                        sortColIndex: 0,
+                        sortColDir: 'asc'
+                    },
+                    success: function(response) {
+                        var dataArray = response.data || response.Data || response;
+                        if (Array.isArray(dataArray)) {
+                            var medicine = dataArray.find(function(m) {
+                                var id = m.id || m.Id || '';
+                                if (typeof id === 'object' && id !== null) {
+                                    id = id.toString ? id.toString() : (id.value || id.$oid || '');
+                                }
+                                return String(id) === '@Model.MedicineId';
+                            });
+                            
+                            if (medicine) {
+                                var medicineId = medicine.id || medicine.Id || '';
+                                if (typeof medicineId === 'object' && medicineId !== null) {
+                                    medicineId = medicineId.toString ? medicineId.toString() : (medicineId.value || medicineId.$oid || '');
+                                }
+                                var medicineName = medicine.name || medicine.Name || 'Unknown Medicine';
+                                
+                                var option = new Option(medicineName, String(medicineId), true, true);
+                                $('#medicineSelect').append(option).trigger('change');
+                            }
+                        }
+                    }
+                });
+                </text>
+            }
+        });
+    </script>
+}
+
+

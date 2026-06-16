@@ -1,0 +1,207 @@
+@model Project.Gawad.Domain.Objects.Resident.ResidentProfileObject
+@using System.Security.Claims
+@using Microsoft.Extensions.Options
+@using Project.Gawad.Application.Options
+@using Project.Gawad.Core.Services
+@inject IOptions<BhcIntegrationOption> BhcIntegrationOption
+@inject IBhcSsoLinkService BhcSsoLink
+
+@{
+    ViewData["Title"] = "Residents";
+    ViewData["HeaderTitle"] = "Resident Profile";
+    var bhc = BhcIntegrationOption.Value;
+    var gawadUsername = User.Identity?.Name;
+    var gawadRole = User.FindFirst(ClaimTypes.Role)?.Value;
+    var registerAtBhcUrl = bhc.ResidentSyncEnabled && !string.IsNullOrWhiteSpace(gawadUsername)
+        ? BhcSsoLink.BuildRegisterPatientLink(Model.Id, gawadUsername, gawadRole)
+        : null;
+    var bhcOpenInNewTab = bhc.OpenInNewTab ? "_blank" : null;
+    var bhcRel = bhc.OpenInNewTab ? "noopener noreferrer" : null;
+}
+
+@section StyleSheets
+{
+
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.bootstrap5.js"></script>
+    <script src="~/app/js/residents-profile.js"></script>
+}
+
+@section NavigationCrumbs
+{
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Residents")">@ViewBag.Title</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @ViewBag.HeaderTitle
+        </li>
+    </ol>
+}
+
+<div class="row g-4" style="overflow: scroll;">
+    <div class="row">
+        <div class="card card-success card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-file-person-fill"></i> &nbsp; Personal Information</div>
+                @if (registerAtBhcUrl is not null)
+                {
+                    <div class="float-end">
+                        <a href="@registerAtBhcUrl" class="btn btn-success" target="@bhcOpenInNewTab" rel="@bhcRel">
+                            <i class="bi bi-hospital"></i> Register at Health Center
+                        </a>
+                    </div>
+                }
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Row-->
+                <div class="row g3">
+                    <div class="col-6">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.FullName, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.FullName, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.DateOfBirth, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.DateOfBirth, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.PlaceOfBirth, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.PlaceOfBirth, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Age, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.Age, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Gender, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.Gender, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.CivilStatus, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.CivilStatus, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Nationality, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.Nationality, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.FatherName, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.FatherName, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.MotherMaidenName, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.MotherMaidenName, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.SpouseName, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.SpouseName, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.IsRegisteredVoter, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.IsRegisteredVoter, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.VoterId, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.VoterId, new { @class = "form-label" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.PrecintNo, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.PrecintNo, new { @class = "form-label" })
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="col-12">
+                            <h5>Addresses</h5>
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.CurrentAddress, new { @class = "form-label" }) <br/>
+                            @Html.DisplayFor(model => model.CurrentAddress, new { @class = "form-label" })
+                        </div>
+
+                        <br/>
+                        <br/>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.PermanentAddress, new { @class = "form-label" }) <br/>
+                            @Html.DisplayFor(model => model.PermanentAddress, new { @class = "form-label" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--end::Row-->
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="card card-info card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-arrow-left-right"></i> &nbsp; Transactions</div>
+                <div class="dropdown float-end">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="btnTransactMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-plus"></i>Add Transaction
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnTransactMenu">
+                        @Html.ActionLink("Clearance", "ClearanceApplicationForm", "Clearances", new { residentId = Model.Id }, new { @class="dropdown-item", target="_blank", rel="noopener noreferrer" })
+                        @Html.ActionLink("Business Permit", "ApplyBusinessPermit", "BusinessPermits", new { residentId = Model.Id }, new { @class="dropdown-item", target="_blank", rel="noopener noreferrer" })
+                    </div>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Row-->
+                <div class="row g3">
+                    <div class="col-12">
+                        <table id="tblTransactions" class="table table-striped" style="width:100%"
+                               data-id="@Model.Id"></table>
+                    </div>
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <div class="card card-danger card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-exclamation-octagon"></i> &nbsp; Complaints</div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Row-->
+                <div class="col-12">
+                    <table id="tblComplaints" class="table table-striped" style="width:100%"
+                           data-id="@Model.Id"></table>
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
+</div>

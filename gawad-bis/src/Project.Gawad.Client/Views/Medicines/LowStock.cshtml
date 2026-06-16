@@ -1,0 +1,61 @@
+@model IEnumerable<Project.Gawad.Domain.Objects.Medicine.MedicineListObject>
+@{
+    ViewData["Title"] = "Low Stock";
+    ViewData["HeaderTitle"] = "Low Stock Medicines";
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Medicines with Low Stock</h3>
+        </div>
+        <div class="card-body">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-info mb-0">No low stock medicines at the moment.</div>
+            }
+            else
+            {
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Medicine Name</th>
+                        <th>Current Stock</th>
+                        <th>Minimum Stock</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.CurrentStock</td>
+                            <td>@item.MinimumStockLevel</td>
+                            <td><span class="badge bg-warning">Low Stock</span></td>
+                            <td class="text-end">
+                                <div class="btn-group" role="group">
+                                    @if (!User.IsInRole("Health Worker / Staff"))
+                                    {
+                                        <a class="btn btn-sm btn-outline-success" href="@Url.Action("AddStock", new { medicineId = item.Id })" title="Add Stock">
+                                            <i class="bi bi-plus-circle"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-info" href="@Url.Action("Stocks", new { medicineId = item.Id })" title="View Stocks">
+                                            <i class="bi bi-box-seam"></i>
+                                        </a>
+                                    }
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", new { id = item.Id })" title="Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+</div>
+

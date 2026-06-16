@@ -1,0 +1,18 @@
+.Gawad.Infrastructure\Repositories\ComplaintRepository.cs
+public async Task<Complaint> AddAsync(Complaint entity)
+{
+    var entry = await _dbContext.Set<Complaint>().AddAsync(entity);
+    // Do NOT call SaveChanges here if higher layers call SaveChanges; but returning entry.Entity
+    // ensures you get the tracked instance that gets its Id set when SaveChanges runs.
+    return entry.Entity;
+}
+
+// in ComplaintProvider.CreateOrUpdateAsync
+if (dto.Id == ObjectId.Empty)
+{
+    entity = await _repo.AddAsync(entity); // capture returned entity
+}
+else
+{
+    entity = await _repo.UpdateAsync(entity);
+}

@@ -1,0 +1,5 @@
+# InfinityFree deploy output (rebuild with scripts/build-infinityfree-deploy.php)
+/deploy/infinityfree/package/
+
+# Optional: keep MySQL credentials off Git
+/config/database.infinityfree.php

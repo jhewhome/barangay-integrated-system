@@ -1,0 +1,677 @@
+@model Project.Gawad.Domain.Objects.PaginatedRecords<Project.Gawad.Domain.Objects.Medicine.MedicineListObject>
+@using Project.Gawad.Core.Extensions
+@{
+    ViewData["Title"] = "Medicines";
+    ViewData["HeaderTitle"] = "Medicine List";
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="~/select2/select2.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2-bootstrap4.min.css"/>
+    <style>
+        /* Make info-box text and icons readable on colored backgrounds */
+        .info-box.bg-success,
+        .info-box.bg-primary,
+        .info-box.bg-info,
+        .info-box.bg-danger {
+            color: #ffffff !important;
+        }
+        
+        .info-box.bg-success .info-box-icon,
+        .info-box.bg-primary .info-box-icon,
+        .info-box.bg-info .info-box-icon,
+        .info-box.bg-danger .info-box-icon {
+            color: #ffffff !important;
+        }
+        
+        .info-box.bg-success .info-box-text,
+        .info-box.bg-primary .info-box-text,
+        .info-box.bg-info .info-box-text,
+        .info-box.bg-danger .info-box-text {
+            color: #ffffff !important;
+        }
+        
+        .info-box.bg-success .info-box-number,
+        .info-box.bg-primary .info-box-number,
+        .info-box.bg-info .info-box-number,
+        .info-box.bg-danger .info-box-number {
+            color: #ffffff !important;
+        }
+        
+        .info-box.bg-success .info-box-number small,
+        .info-box.bg-primary .info-box-number small,
+        .info-box.bg-info .info-box-number small,
+        .info-box.bg-danger .info-box-number small {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+    </style>
+}
+
+<form id="__antiForgeryForm" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <div class="row g-2 align-items-center">
+                <div class="col-lg-8 col-md-6">
+                    <div class="d-flex flex-column">
+                        <h3 class="card-title mb-1" style="float: none;">Medicines</h3>
+                        @if (ViewBag.TotalMedicines != null)
+                        {
+                            <small class="text-muted">Total: @ViewBag.TotalMedicines medicine(s)</small>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 d-flex gap-2 justify-content-end">
+                    <a href="@Url.ActionLink("LowStock")" class="btn btn-warning">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Low Stock
+                    </a>
+                    @if (!User.IsInRole("Health Worker / Staff"))
+                    {
+                        <a href="@Url.ActionLink("Create")" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Add Medicine
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Inventory Summary Section -->
+        <div class="card-body border-bottom bg-light">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <div class="info-box bg-danger mb-0">
+                        <span class="info-box-icon"><i class="bi bi-box-arrow-up"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Dispensed</span>
+                            <span class="info-box-number">@(((decimal)(ViewBag.TotalDispensedCount ?? 0)).ToString("N0")) <small>pcs</small></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-box bg-info mb-0">
+                        <span class="info-box-icon"><i class="bi bi-clipboard2-check-fill"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Remaining Stock</span>
+                            <span class="info-box-number">@(((decimal)(ViewBag.TotalRemainingStock ?? 0)).ToString("N0")) <small>pcs</small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Search Filter Section -->
+        <div class="card-body border-bottom">
+            @{
+                var currentSearch = ViewBag.Search as string ?? Context.Request.Query["search"].ToString();
+                var currentCategory = ViewBag.Category as string ?? Context.Request.Query["category"].ToString();
+                var currentUnitType = ViewBag.UnitType as string ?? Context.Request.Query["unitType"].ToString();
+                var currentStatus = ViewBag.Status as string ?? Context.Request.Query["status"].ToString();
+            }
+            <form method="get" action="@Url.Action("Index")" class="row g-3" id="searchForm">
+                <div class="col-md-12">
+                    <label for="search" class="form-label"><strong>Search Medicine Name</strong></label>
+                    <select id="search" class="form-control select2bs4" style="width: 100%; font-size: 1rem;" data-placeholder="Type to search medicine name, description, or generic name...">
+                        @if (!string.IsNullOrWhiteSpace(currentSearch))
+                        {
+                            <option value="@currentSearch" selected>@currentSearch</option>
+                        }
+                    </select>
+                    <input type="hidden" id="searchValue" name="search" value="@currentSearch" />
+                </div>
+                <div class="col-md-4">
+                    <label for="category" class="form-label"><strong>Category</strong></label>
+                    <select id="category" name="category" class="form-control" style="font-size: 1rem;">
+                        <option value="">All Categories</option>
+                        @foreach (Project.Gawad.Domain.Enums.Medicine.MedicineCategory cat in Enum.GetValues(typeof(Project.Gawad.Domain.Enums.Medicine.MedicineCategory)))
+                        {
+                            var catValue = cat.ToString();
+                            if (catValue == currentCategory)
+                            {
+                                <option value="@catValue" selected>@cat.GetEnumDisplayName()</option>
+                            }
+                            else
+                            {
+                                <option value="@catValue">@cat.GetEnumDisplayName()</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="unitType" class="form-label"><strong>Unit Type</strong></label>
+                    <select id="unitType" name="unitType" class="form-control" style="font-size: 1rem;">
+                        <option value="">All Unit Types</option>
+                        @if (currentUnitType == "Box")
+                        {
+                            <option value="Box" selected>Box</option>
+                        }
+                        else
+                        {
+                            <option value="Box">Box</option>
+                        }
+                        @if (currentUnitType == "Bottle")
+                        {
+                            <option value="Bottle" selected>Bottle</option>
+                        }
+                        else
+                        {
+                            <option value="Bottle">Bottle</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="status" class="form-label"><strong>Status</strong></label>
+                    <select id="status" name="status" class="form-control" style="font-size: 1rem;">
+                        <option value="">All Status</option>
+                        @if (currentStatus == "active")
+                        {
+                            <option value="active" selected>Active</option>
+                        }
+                        else
+                        {
+                            <option value="active">Active</option>
+                        }
+                        @if (currentStatus == "inactive")
+                        {
+                            <option value="inactive" selected>Inactive</option>
+                        }
+                        else
+                        {
+                            <option value="inactive">Inactive</option>
+                        }
+                        @if (currentStatus == "lowstock")
+                        {
+                            <option value="lowstock" selected>Low Stock</option>
+                        }
+                        else
+                        {
+                            <option value="lowstock">Low Stock</option>
+                        }
+                        @if (currentStatus == "outofstock")
+                        {
+                            <option value="outofstock" selected>Out of Stock</option>
+                        }
+                        else
+                        {
+                            <option value="outofstock">Out of Stock</option>
+                        }
+                        @if (currentStatus == "instock")
+                        {
+                            <option value="instock" selected>In Stock</option>
+                        }
+                        else
+                        {
+                            <option value="instock">In Stock</option>
+                        }
+                        @if (currentStatus == "expiringsoon")
+                        {
+                            <option value="expiringsoon" selected>⚠️ Expiring Soon (30 days)</option>
+                        }
+                        else
+                        {
+                            <option value="expiringsoon">⚠️ Expiring Soon (30 days)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Apply Filters
+                        </button>
+                        @if (!string.IsNullOrWhiteSpace(currentSearch) || !string.IsNullOrWhiteSpace(currentCategory) || !string.IsNullOrWhiteSpace(currentUnitType) || !string.IsNullOrWhiteSpace(currentStatus))
+                        {
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Clear All Filters
+                            </a>
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (Model == null || Model.Data == null || !Model.Data.Any())
+            {
+                <div class="alert alert-info mb-0">No medicines found. Click "Add Medicine" to create one.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Unit</th>
+                                <th class="text-end">Minimum Stock <small class="text-muted">(pieces)</small></th>
+                                <th class="text-end">Current Stock <small class="text-muted">(pieces)</small></th>
+                                <th class="text-end">Total Dispensed <small class="text-muted">(pieces)</small></th>
+                                <th>Status</th>
+                                <th>Active</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var m in Model.Data)
+                        {
+                            var statusBadge = m.CurrentStock <= m.MinimumStockLevel ? "danger" : "success";
+                            var isZeroStock = m.CurrentStock == 0;
+                            var isLowStock = m.CurrentStock > 0 && m.CurrentStock <= m.MinimumStockLevel;
+                            var showWarning = isZeroStock || isLowStock;
+                            var hasExpiringSoon = m.ExpiringSoonCount > 0;
+                            var rowClass = isZeroStock ? "table-danger" : (hasExpiringSoon ? "table-warning" : (isLowStock ? "table-warning" : ""));
+                            <tr class="@rowClass">
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-semibold">@m.Name</span>
+                                        <div class="mt-1">
+                                            @if (isZeroStock)
+                                            {
+                                                <span class="badge bg-danger me-1" title="No stock available">
+                                                    <i class="bi bi-x-circle-fill"></i> Out of Stock
+                                                </span>
+                                            }
+                                            @if (hasExpiringSoon)
+                                            {
+                                                <span class="badge bg-warning text-dark me-1" title="@m.ExpiringSoonCount batch(es) expiring within 30 days">
+                                                    <i class="bi bi-clock-fill"></i> Expiring Soon (@m.ExpiringSoonCount)
+                                                </span>
+                                            }
+                                            @if (isLowStock && !isZeroStock)
+                                            {
+                                                <span class="badge bg-orange text-white me-1" style="background-color: #fd7e14;" title="Stock is at or below minimum level">
+                                                    <i class="bi bi-exclamation-triangle-fill"></i> Low Stock
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@m.Category</td>
+                                <td>
+                                    @if (m.UnitOfMeasure == "Box")
+                                    {
+                                        <span>per box</span>
+                                    }
+                                    else if (m.UnitOfMeasure == "Bottle")
+                                    {
+                                        <span>per bottle</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@m.UnitOfMeasure</span>
+                                    }
+                                </td>
+                                <td class="text-end">@m.MinimumStockLevel</td>
+                                <td class="text-end">
+                                    @m.CurrentStock
+                                    @if (showWarning)
+                                    {
+                                        <i class="bi bi-exclamation-triangle-fill text-danger ms-1" title="Dispense not allowed"></i>
+                                    }
+                                </td>
+                                <td class="text-end">@m.TotalDispensed</td>
+                                <td>
+                                    @if (isZeroStock)
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle"></i> No Stock
+                                        </span>
+                                    }
+                                    else if (isLowStock)
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="bi bi-exclamation-triangle"></i> Low
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle"></i> OK
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (m.IsActive) { <span class="badge bg-primary">Active</span>; } else { <span class="badge bg-secondary">Inactive</span>; }
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", new { id = m.Id })" title="Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        @if (!User.IsInRole("Health Worker / Staff"))
+                                        {
+                                            <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Edit", new { id = m.Id })" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-outline-success" href="@Url.Action("AddStock", new { medicineId = m.Id })" title="Add Stock">
+                                                <i class="bi bi-plus-circle"></i>
+                                            </a>
+                                        }
+                                        @{
+                                            // Disable dispense if stock is zero or low
+                                            var canDispense = m.CurrentStock > 0 && m.CurrentStock > m.MinimumStockLevel;
+                                            var dispenseTitle = !canDispense 
+                                                ? (isZeroStock 
+                                                    ? "Cannot dispense: Stock is zero. Please add stock first." 
+                                                    : $"Warning: Stock is low (Current: {m.CurrentStock}, Minimum: {m.MinimumStockLevel})")
+                                                : (isLowStock 
+                                                    ? $"Warning: Stock is low (Current: {m.CurrentStock}, Minimum: {m.MinimumStockLevel})" 
+                                                    : "Dispense Medicine");
+                                        }
+                                        @if (!canDispense)
+                                        {
+                                            <button class="btn btn-sm btn-outline-warning" disabled title="@dispenseTitle" style="opacity: 0.5; cursor: not-allowed;">
+                                                <i class="bi bi-box-arrow-up"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-sm btn-outline-warning @(isLowStock ? "border-warning" : "")" href="@Url.Action("Dispense", new { medicineId = m.Id })" title="@dispenseTitle" @(isLowStock ? "data-low-stock='true' data-stock='" + m.CurrentStock + "' data-minimum='" + m.MinimumStockLevel + "'" : "")>
+                                                <i class="bi bi-box-arrow-up"></i>@if (isLowStock) { <i class="bi bi-exclamation-triangle-fill text-warning ms-1"></i> }
+                                            </a>
+                                        }
+                                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Transactions", new { medicineId = m.Id })" title="Transactions">
+                                            <i class="bi bi-arrow-left-right"></i>
+                                        </a>
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+                                            <button type="button" class="btn btn-sm btn-outline-danger delete-medicine" data-id="@m.Id" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+        @if (Model != null && Model.PageSize > 0 && Model.RecordsTotal > Model.PageSize)
+        {
+            var totalPages = (int)Math.Ceiling((double)Model.RecordsTotal / Model.PageSize);
+            var currentPage = Model.PageNumber;
+            var search = ViewBag.Search as string ?? Context.Request.Query["search"].ToString();
+            var category = ViewBag.Category as string ?? Context.Request.Query["category"].ToString();
+            var unitType = ViewBag.UnitType as string ?? Context.Request.Query["unitType"].ToString();
+            var status = ViewBag.Status as string ?? Context.Request.Query["status"].ToString();
+            
+            // Calculate page range to show (show max 7 page numbers)
+            var startPage = Math.Max(1, currentPage - 3);
+            var endPage = Math.Min(totalPages, currentPage + 3);
+            
+            // Adjust if we're near the beginning or end
+            if (endPage - startPage < 6)
+            {
+                if (startPage == 1)
+                    endPage = Math.Min(totalPages, startPage + 6);
+                else if (endPage == totalPages)
+                    startPage = Math.Max(1, endPage - 6);
+            }
+            
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <small>Page @currentPage of @totalPages (@Model.RecordsTotal total medicines)</small>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            @* Previous button *@
+                            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                                @if (currentPage > 1)
+                                {
+                                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1, search = !string.IsNullOrEmpty(search) ? search : null, category = !string.IsNullOrEmpty(category) ? category : null, unitType = !string.IsNullOrEmpty(unitType) ? unitType : null, status = !string.IsNullOrEmpty(status) ? status : null })">Previous</a>
+                                }
+                                else
+                                {
+                                    <span class="page-link">Previous</span>
+                                }
+                            </li>
+                            
+                            @* First page button *@
+                            @if (startPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = 1, search = !string.IsNullOrEmpty(search) ? search : null, category = !string.IsNullOrEmpty(category) ? category : null, unitType = !string.IsNullOrEmpty(unitType) ? unitType : null, status = !string.IsNullOrEmpty(status) ? status : null })">1</a>
+                                </li>
+                                @if (startPage > 2)
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                }
+                            }
+                            
+                            @* Page number buttons *@
+                            @for (int i = startPage; i <= endPage; i++)
+                            {
+                                var pageNum = i;
+                                <li class="page-item @(pageNum == currentPage ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = pageNum, search = !string.IsNullOrEmpty(search) ? search : null, category = !string.IsNullOrEmpty(category) ? category : null, unitType = !string.IsNullOrEmpty(unitType) ? unitType : null, status = !string.IsNullOrEmpty(status) ? status : null })">@pageNum</a>
+                                </li>
+                            }
+                            
+                            @* Last page button *@
+                            @if (endPage < totalPages)
+                            {
+                                @if (endPage < totalPages - 1)
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = totalPages, search = !string.IsNullOrEmpty(search) ? search : null, category = !string.IsNullOrEmpty(category) ? category : null, unitType = !string.IsNullOrEmpty(unitType) ? unitType : null, status = !string.IsNullOrEmpty(status) ? status : null })">@totalPages</a>
+                                </li>
+                            }
+                            
+                            @* Next button *@
+                            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                                @if (currentPage < totalPages)
+                                {
+                                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1, search = !string.IsNullOrEmpty(search) ? search : null, category = !string.IsNullOrEmpty(category) ? category : null, unitType = !string.IsNullOrEmpty(unitType) ? unitType : null, status = !string.IsNullOrEmpty(status) ? status : null })">Next</a>
+                                }
+                                else
+                                {
+                                    <span class="page-link">Next</span>
+                                }
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/select2/select2.full.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 for search input
+            $('#search').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Type to search medicine name, description, or generic name...',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('body'),
+                ajax: {
+                    url: '/Medicines/GetMedicinesList',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            search: params.term || '',
+                            page: params.page || 1,
+                            itemsPerPage: 10,
+                            sortColIndex: 0,
+                            sortColDir: 'asc'
+                        };
+                    },
+                    processResults: function (response) {
+                        var dataArray = [];
+                        
+                        // Handle PaginatedRecords response structure
+                        if (response.data && Array.isArray(response.data)) {
+                            dataArray = response.data;
+                        } else if (response.Data && Array.isArray(response.Data)) {
+                            dataArray = response.Data;
+                        } else if (Array.isArray(response)) {
+                            dataArray = response;
+                        }
+                        
+                        if (!Array.isArray(dataArray) || dataArray.length === 0) {
+                            return {
+                                results: [],
+                                pagination: {
+                                    more: false
+                                }
+                            };
+                        }
+                        
+                        var hasMore = false;
+                        var recordsFiltered = response.RecordsFiltered || response.recordsFiltered || response.RecordsTotal || response.recordsTotal || 0;
+                        var pageSize = response.PageSize || response.pageSize || 10;
+                        var currentPage = response.PageNumber || response.pageNumber || 1;
+                        
+                        if (recordsFiltered > 0) {
+                            hasMore = (currentPage * pageSize) < recordsFiltered;
+                        } else {
+                            hasMore = dataArray.length === pageSize;
+                        }
+                        
+                        // Map results to Select2 format
+                        var results = [];
+                        var seenNames = new Set();
+                        
+                        dataArray.forEach(function (medicine) {
+                            var medicineName = medicine.name || medicine.Name || '';
+                            
+                            if (!medicineName || medicineName.trim() === '') {
+                                return;
+                            }
+                            
+                            medicineName = String(medicineName).trim();
+                            var medicineNameLower = medicineName.toLowerCase();
+                            
+                            // Deduplicate by name
+                            if (seenNames.has(medicineNameLower)) {
+                                return;
+                            }
+                            seenNames.add(medicineNameLower);
+                            
+                            results.push({
+                                id: medicineName,
+                                text: medicineName
+                            });
+                        });
+                        
+                        // Sort results alphabetically
+                        results.sort(function(a, b) {
+                            return a.text.localeCompare(b.text);
+                        });
+                        
+                        return {
+                            results: results,
+                            pagination: {
+                                more: hasMore
+                            }
+                        };
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error loading medicines:', error);
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1
+            });
+
+            // When a medicine is selected, update the hidden input (don't auto-submit, let user click Apply Filters)
+            $('#search').on('select2:select', function(e) {
+                var selectedData = e.params.data;
+                $('#searchValue').val(selectedData.id);
+            });
+
+            // When search is cleared, clear the hidden input (don't auto-submit, let user click Apply Filters)
+            $('#search').on('select2:clear', function(e) {
+                $('#searchValue').val('');
+            });
+
+            // Auto-submit form when filter dropdowns change
+            $('#category, #unitType, #status').on('change', function() {
+                // Ensure search value is set before submitting
+                var searchValue = $('#search').val();
+                if (searchValue) {
+                    $('#searchValue').val(searchValue);
+                } else {
+                    $('#searchValue').val('');
+                }
+                $('#searchForm').submit();
+            });
+
+            // Ensure form submission uses hidden input values
+            $('#searchForm').on('submit', function(e) {
+                // Update hidden input from Select2 value before submission
+                var searchValue = $('#search').val();
+                if (searchValue) {
+                    $('#searchValue').val(searchValue);
+                } else {
+                    $('#searchValue').val('');
+                }
+            });
+
+            // Handle delete medicine button click
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.delete-medicine')) {
+                    e.preventDefault();
+                    const button = e.target.closest('.delete-medicine');
+                    const id = button.getAttribute('data-id');
+                    const confirmDelete = confirm('Are you sure you want to delete this medicine? This action cannot be undone.');
+                    if (!confirmDelete) return;
+
+                    const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+                    if (!tokenInput) {
+                        alert('Anti-forgery token not found. Please refresh the page and try again.');
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('__RequestVerificationToken', tokenInput.value);
+
+                    fetch(`/Medicines/Delete?id=${id}`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Medicine deleted successfully');
+                            location.reload(); // Reload the page to refresh the list
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        alert('An error occurred: ' + err.message);
+                    });
+                }
+            });
+        });
+    </script>
+}
+

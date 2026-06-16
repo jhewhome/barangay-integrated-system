@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Residents";
+    ViewData["HeaderTitle"] = "Residents Masterlist";
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="../bootstrap-datatables/dataTables.bootstrap5.css"/>
+    <link rel="stylesheet" href="~/app/css/complaints.css?v=@DateTime.Now.Ticks" />
+    <style>
+        /* Force pagination centering for residents page */
+        .dataTables_wrapper .dataTables_paginate {
+            text-align: center !important;
+            width: 100% !important;
+        }
+        .dataTables_wrapper .dataTables_paginate ul {
+            text-align: center !important;
+            display: inline-block !important;
+            margin: 0 auto !important;
+        }
+        
+        /* Additional pagination centering rules */
+        div.dataTables_wrapper div.dataTables_paginate {
+            text-align: center !important;
+            width: 100% !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            text-align: center !important;
+            display: inline-block !important;
+            margin: 0 auto !important;
+        }
+        
+        /* dt-buttons spacing */
+        .dataTables_wrapper .dt-buttons {
+            margin-top: 2.5rem !important;
+            margin-bottom: 2.5rem !important;
+        }
+    </style>
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.bootstrap5.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.buttons.js"></script>
+    <script src="~/bootstrap-datatables/buttons.dataTables.js"></script>
+    <script src="~/bootstrap-datatables/jszip.min.js"></script>
+    <script src="~/bootstrap-datatables/pdfmake.min.js"></script>
+    <script src="~/bootstrap-datatables/vfs_fonts.js"></script>
+    <script src="~/bootstrap-datatables/buttons.html5.min.js"></script>
+    <script src="~/bootstrap-datatables/buttons.print.min.js"></script>
+    <script src="~/app/js/residents-index.js"></script>
+}
+
+
+@section NavigationCrumbs
+{
+
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <h3 class="card-title"></h3>
+                </div>
+                <div class="col-md-4 d-grid">
+                    <a href="@Url.ActionLink("EnrollResident")" class="btn btn-success w-100">
+                        <i class="bi bi-person-plus-fill"></i> Enroll New Resident
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="tblMain" class="table table-striped complaint-table" style="width:100%"></table>
+        </div>
+    </div>
+</div>

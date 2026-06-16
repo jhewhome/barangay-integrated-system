@@ -1,0 +1,115 @@
+@model Project.Gawad.Domain.Objects.Transactions.TransactionDetailsObject
+
+@{
+    ViewData["Title"] = "Transaction";
+    ViewData["HeaderTitle"] = "Transaction Details";
+}
+
+@section StyleSheets
+{
+
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/pdfobject/pdfobject.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            let id = $("#pdfRenderer").attr("data-id");
+            console.log(id);
+
+            PDFObject.embed("/Transactions/TransactionDocument/" + id, "#pdfRenderer");
+        });
+    </script>
+}
+
+@section NavigationCrumbs
+{
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Transactions")">@ViewBag.Title</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @ViewBag.HeaderTitle
+        </li>
+    </ol>
+}
+
+<div class="row g-4" style="overflow: scroll;">
+    <div class="row">
+        <div class="card card-success card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-file-person-fill"></i> &nbsp; Transaction Details</div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Row-->
+                <div class="row g3">
+                    <div class="col-6">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Id, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.Id, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.ControlNumber, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.ControlNumber, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.FullName, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.FullName, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.TransactionType, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.TransactionType, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.OfficerOfTheDay, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.OfficerOfTheDay, new { @class = "form-label" })
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.ReceiptNumber, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.ReceiptNumber, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.PaidAmount, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.PaidAmount, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.OfficerOfTheDay, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.OfficerOfTheDay, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.TransactionDateTime, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.TransactionDateTime, new { @class = "form-label" })
+                        </div>
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Notes, new { @class = "form-label" }) :
+                            @Html.DisplayFor(model => model.Notes, new { @class = "form-label" })
+                        </div>
+                    </div>
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Body-->
+        </div>
+
+        <div class="card card-success card-outline mb-3">
+            <!--begin::Header-->
+            <div class="card-header">
+                <div class="card-title"><i class="bi bi-file-earmark-text-fill"></i> Document</div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <div id="pdfRenderer" data-id="@Model.Id" style="height: 500px;"></div>
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
+</div>

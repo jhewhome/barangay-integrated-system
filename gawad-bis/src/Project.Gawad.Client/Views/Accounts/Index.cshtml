@@ -1,0 +1,77 @@
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IOptions<AppConfigOption> AppConfigOption
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Options
+@using Project.Gawad.Application.Options
+@using Project.Gawad.Domain.Identity
+@model Project.Gawad.Domain.ViewModels.Login.LoginViewModel
+
+@{
+    Layout = "_PageLayout";
+    ViewData["Title"] = "Login";
+    ViewData["HeaderTitle"] = "";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100vh;">
+    <!-- Logo and Text above the card -->
+    <div class="text-center mb-3">
+        <img src="~/adminlte/images/logo.png" alt="Logo" style="max-height: 200px;" />
+        <h2 class="text-muted mt-2 mb-0"><strong>Barangay Balong Bato </strong></h2>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <h1 class="mb-0 link-dark link-offset-2 link-opacity-100 link-opacity-50-hover">
+                    <b>@AppConfigOption.Value.AppName</b>
+                </h1>
+            </div>
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                @using (Html.BeginForm("SignIn", "Accounts", FormMethod.Post))
+                {
+                    <div class="input-group mb-1">
+                        <div class="form-floating">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "" })
+                            @Html.LabelFor(model => model.Username)
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="form-floating">
+                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "", type = "password" })
+                            @Html.LabelFor(model => model.Password)
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-inline-flex align-items-center">
+                            <div class="form-check">
+                                @Html.CheckBoxFor(model => model.KeepMeLogin, new { @class = "form-check-input", id = "keepMeSignedIn" })
+                                @Html.LabelFor(model => model.KeepMeLogin, new { @class = "form-check-label", @for = "keepMeSignedIn" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <p style="text-align: center; font-style: italic;">
+                                    version @AppConfigOption.Value.Version
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

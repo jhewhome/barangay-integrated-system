@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Project.Gawad.Core\Project.Gawad.Core.csproj"/>
+        <ProjectReference Include="..\Project.Gawad.Data.MongoDb\Project.Gawad.Data.MongoDb.csproj"/>
+        <ProjectReference Include="..\Project.Gawad.Domain\Project.Gawad.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+        <PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.2.1"/>
+    </ItemGroup>
+
+</Project>

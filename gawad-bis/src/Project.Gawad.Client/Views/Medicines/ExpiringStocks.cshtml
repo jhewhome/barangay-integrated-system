@@ -1,0 +1,40 @@
+@model IEnumerable<Project.Gawad.Domain.Objects.Medicine.MedicineStockListObject>
+@{
+    ViewData["Title"] = "Expiring Soon";
+    ViewData["HeaderTitle"] = "Expiring Soon Stocks";
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Medicines Expiring Within 30 Days</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Medicine Name</th>
+                        <th>Quantity</th>
+                        <th>Expiry Date</th>
+                        <th>Batch Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.MedicineName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.ExpiryDate?.ToString("MM/dd/yyyy")</td>
+                            <td>@item.BatchNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+

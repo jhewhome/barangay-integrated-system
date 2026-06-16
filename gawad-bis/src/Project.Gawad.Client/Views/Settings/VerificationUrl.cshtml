@@ -1,0 +1,141 @@
+@model Project.Gawad.Client.Models.SettingsViewModel
+
+@{
+    ViewData["Title"] = "QR Code Verification URL Settings";
+    ViewData["HeaderTitle"] = "QR Code Verification URL Configuration";
+}
+
+@section StyleSheets
+{
+    <style>
+        /* Ensure proper spacing */
+        .alert {
+            margin-bottom: 1rem;
+        }
+    </style>
+}
+
+@section NavigationCrumbs
+{
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Settings")">Settings</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @ViewBag.HeaderTitle
+        </li>
+    </ol>
+}
+
+<div class="row g-4">
+    <div class="col-12">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    </div>
+
+    <div class="col-12" id="verification-url">
+        <div class="card card-info card-outline">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="bi bi-qr-code"></i> QR Code Verification URL Configuration
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    <i class="bi bi-info-circle"></i> Configure the base URL for QR code verification links. 
+                    Use your computer's IPv4 address (not localhost) so mobile devices on the same network can scan and verify Barangay IDs.
+                    <br /><br />
+                    <strong>To find your IPv4 address:</strong>
+                    <ul class="mb-3">
+                        <li><strong>Windows:</strong> Open Command Prompt and type <code>ipconfig</code>. Look for "IPv4 Address" (usually starts with 192.168.x.x or 10.x.x.x)</li>
+                        <li><strong>Mac/Linux:</strong> Open Terminal and type <code>ifconfig</code> or <code>ip addr</code>. Look for your local network adapter's IPv4 address</li>
+                    </ul>
+                    <strong>Format:</strong> <code>http://YOUR_IP_ADDRESS:5001</code> (e.g., <code>http://192.168.1.100:5001</code>)
+                </p>
+
+                @using (Html.BeginForm("UpdateVerificationUrl", "Settings", FormMethod.Post, new { id = "verificationUrlForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="verificationBaseUrl" class="form-label">Verification Base URL</label>
+                                <input type="text" name="verificationBaseUrl" id="verificationBaseUrl" class="form-control" 
+                                       value="@Model?.VerificationBaseUrl" 
+                                       placeholder="http://192.168.1.100:5001" />
+                                <small class="form-text text-muted">
+                                    <i class="bi bi-info-circle"></i> The base URL for QR code verification links. Leave empty to use relative URLs (may not work on mobile devices).
+                                </small>
+                                @if (!string.IsNullOrWhiteSpace(Model?.VerificationBaseUrl))
+                                {
+                                    <div class="mt-2">
+                                        <small class="text-success">
+                                            <i class="bi bi-check-circle-fill"></i> Current: <code>@Model.VerificationBaseUrl</code>
+                                        </small>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle-fill"></i> Save Verification URL
+                            </button>
+                            <a href="@Url.Action("Index", "Settings")" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Form validation
+            $('#verificationUrlForm').on('submit', function(e) {
+                var verificationBaseUrl = $('#verificationBaseUrl').val();
+                
+                // Optional URL validation - only validate format if URL is provided
+                if (verificationBaseUrl && verificationBaseUrl.trim() !== '') {
+                    var urlPattern = /^https?:\/\/\S+$/;
+                    if (!urlPattern.test(verificationBaseUrl.trim())) {
+                        e.preventDefault();
+                        alert('Please enter a valid URL format (e.g., http://192.168.1.100:5001).');
+                        $('#verificationBaseUrl').focus();
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+        });
+    </script>
+}
+
+
+
+
+

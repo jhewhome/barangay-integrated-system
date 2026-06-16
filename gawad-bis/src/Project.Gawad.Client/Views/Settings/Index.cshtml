@@ -1,0 +1,208 @@
+@model Project.Gawad.Client.Models.SettingsViewModel
+
+@{
+    ViewData["Title"] = "Official Signatory Settings";
+    ViewData["HeaderTitle"] = "Official Signatory Configuration";
+}
+
+@section StyleSheets
+{
+    <style>
+        /* Signature pad validation styling */
+        .signature-pad-container.is-invalid {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+        }
+        
+        .is-invalid {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+        }
+        
+        /* Ensure Select2 dropdown visibility */
+        .select2-container {
+            z-index: 9999 !important;
+        }
+        
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Add offset for anchor links to account for fixed header */
+        [id="official-signatory"],
+        [id="verification-url"] {
+            scroll-margin-top: 80px; /* Adjust based on your header height */
+        }
+    </style>
+}
+
+@section NavigationCrumbs
+{
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="#">Settings</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @ViewBag.HeaderTitle
+        </li>
+    </ol>
+}
+
+<div class="row g-4">
+    <div class="col-12">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    </div>
+
+    <div class="col-12" id="official-signatory">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="bi bi-person-badge-fill"></i> Official Signatory Configuration
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    <i class="bi bi-info-circle"></i> Configure the official signatory information that will be automatically used for Barangay IDs. 
+                    This information is pre-filled when issuing new IDs and cannot be changed during the issuance process.
+                </p>
+
+                @using (Html.BeginForm("UpdateOfficialSignatory", "Settings", FormMethod.Post, new { enctype = "multipart/form-data", id = "settingsForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.SignatoryName, new { @class = "form-label" })
+                                <span class="text-danger">*</span>
+                                @Html.TextBoxFor(model => model.SignatoryName, new { @class = "form-control", placeholder = "e.g., Alvin G. Alonzo" })
+                                @Html.ValidationMessageFor(model => model.SignatoryName, "", new { @class = "form-text text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.SignatoryPosition, new { @class = "form-label" })
+                                <span class="text-danger">*</span>
+                                @Html.TextBoxFor(model => model.SignatoryPosition, new { @class = "form-control", placeholder = "e.g., Barangay Captain" })
+                                @Html.ValidationMessageFor(model => model.SignatoryPosition, "", new { @class = "form-text text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card card-secondary card-outline mb-3">
+                                <div class="card-header">
+                                    <div class="card-title"><i class="bi bi-pen-fill"></i> Official Signature (Required)</div>
+                                </div>
+                                <div class="card-body">
+                                    <label for="officialSignaturePad" class="form-label">Official Signature <span class="text-danger">*</span></label>
+                                    <small class="form-text text-muted d-block mb-2">
+                                        Please sign below using the signature pad/touch screen, or upload a signature image file.
+                                    </small>
+                                    <span id="officialSignature-validation-error" class="form-text text-danger d-block mb-2" style="display: none;"></span>
+                                    
+                                    <!-- Signature Pad (for signature pad hardware or touch screen) -->
+                                    <div class="signature-pad-container border rounded p-2 mb-3" style="background-color: #fff; position: relative;">
+                                        <canvas id="officialSignaturePad" aria-label="Official signature pad" style="width: 100%; height: 200px; touch-action: none; cursor: crosshair;"></canvas>
+                                    </div>
+                                    
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-sm btn-secondary w-100" id="btnClearOfficialSignature">
+                                                <i class="bi bi-eraser"></i> Clear Signature Pad
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-sm btn-info w-100" id="btnToggleUploadOfficialSignature">
+                                                <i class="bi bi-upload"></i> Upload from Computer
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- File Upload Option -->
+                                    <div id="officialSignatureUploadSection" style="display: none;" class="mb-3">
+                                        <label for="signatureFile" class="form-label">Upload Signature Image</label>
+                                        <input type="file" name="signatureFile" id="signatureFile" class="form-control" accept="image/*" />
+                                        <small class="form-text text-muted">
+                                            <i class="bi bi-info-circle"></i> Upload a signature image (PNG, JPG, JPEG - transparent background preferred, max 5MB)
+                                        </small>
+                                    </div>
+                                    
+                                    <input type="hidden" name="signaturePath" id="signaturePath" />
+                                    
+                                    <!-- Signature Preview -->
+                                    <div id="officialSignaturePreview" class="mt-2" style="display: none;">
+                                        <p class="text-success"><i class="bi bi-check-circle-fill"></i> Signature captured</p>
+                                        <img id="officialSignaturePreviewImg" src="" alt="Official Signature" class="img-thumbnail" style="max-width: 300px; max-height: 150px; border: 2px solid #28a745;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model?.SignaturePath))
+                        {
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Current Signature</label>
+                                    <div class="border rounded p-3" style="background-color: #f8f9fa;">
+                                        <img src="~/@Model.SignaturePath" alt="Official Signature" class="img-fluid" style="max-width: 300px; max-height: 150px; border: 2px solid #667eea;" />
+                                        <div class="mt-2">
+                                            <small class="text-muted">Path: @Model.SignaturePath</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                <i class="bi bi-exclamation-circle"></i> 
+                                <strong>Note:</strong> After updating the settings, you may need to restart the application for the changes to take effect for new Barangay IDs.
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle-fill"></i> Save Official Signatory Settings
+                            </button>
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <!-- Signature Pad Library - Works with signature pad hardware or touch screen -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.9/dist/signature_pad.umd.min.js"></script>
+    <script>
+        // Pass existing signature path to JavaScript
+        window.existingSignaturePath = @Html.Raw(string.IsNullOrWhiteSpace(Model?.SignaturePath) ? "null" : $"'{Model.SignaturePath}'");
+    </script>
+    <script src="~/app/js/settings.js"></script>
+}

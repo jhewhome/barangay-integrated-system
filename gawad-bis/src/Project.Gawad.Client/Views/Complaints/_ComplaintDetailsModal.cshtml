@@ -1,0 +1,132 @@
+@using Project.Gawad.Domain.Enums.Complaints
+@model Project.Gawad.Domain.Objects.Complaint.ComplaintFormObject
+
+<div class="modal fade" id="complaintDetailsModal" tabindex="-1" aria-labelledby="complaintDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="complaintDetailsModalLabel">
+                    <i class="bi bi-exclamation-circle-fill"></i> Complaint Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Complaint ID</label>
+                            <p class="form-control-plaintext" id="modalComplaintId">@Model.Id</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Type</label>
+                            <p class="form-control-plaintext" id="modalComplaintType">@Model.ComplaintType</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Status</label>
+                            <p class="form-control-plaintext" id="modalStatus">@Model.Status</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Details</label>
+                            <p class="form-control-plaintext" id="modalDetails">@Model.Details</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Date Received</label>
+                            <p class="form-control-plaintext" id="modalDateReceived">@Model.DateReceived?.ToString("MMMM dd, yyyy hh:mm tt")</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Blotter Received By</label>
+                            <p class="form-control-plaintext" id="modalBlotterReceivedBy">@Model.BlotterReceivedBy</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">OR Number</label>
+                            <p class="form-control-plaintext" id="modalORNumber">@Model.ORNumber</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Total Fee</label>
+                            <p class="form-control-plaintext" id="modalTotalFee">@Model.TotalFee</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Note</label>
+                            <p class="form-control-plaintext" id="modalNote">@Model.Note</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Recommendation</label>
+                            <p class="form-control-plaintext" id="modalRecommendation">@Model.Recommendation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Complainants Section -->
+                @if (Model.Complainants != null && Model.Complainants.Any())
+                {
+                    <div class="mt-4">
+                        <h6 class="fw-bold text-primary"><i class="bi bi-person-fill"></i> Complainants</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Date of Birth</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalComplainants">
+                                    @foreach (var complainant in Model.Complainants)
+                                    {
+                                        <tr>
+                                            <td>@complainant.FirstName @complainant.LastName</td>
+                                            <td>@complainant.ContactNumber</td>
+                                            <td>@complainant.DateOfBirth?.ToString("MMM dd, yyyy")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                
+                <!-- Respondents Section -->
+                @if (Model.Respondents != null && Model.Respondents.Any())
+                {
+                    <div class="mt-4">
+                        <h6 class="fw-bold text-primary"><i class="bi bi-person-fill"></i> Respondents</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Age</th>
+                                        <th>Occupation</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalRespondents">
+                                    @foreach (var respondent in Model.Respondents)
+                                    {
+                                        <tr>
+                                            <td>@respondent.FirstName @respondent.LastName</td>
+                                            <td>@respondent.Address</td>
+                                            <td>@respondent.Age</td>
+                                            <td>@respondent.Occupation</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Close
+                </button>
+                <a href="#" class="btn btn-primary" id="modalEditButton">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

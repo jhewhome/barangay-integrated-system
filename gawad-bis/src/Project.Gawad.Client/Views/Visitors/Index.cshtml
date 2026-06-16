@@ -1,0 +1,85 @@
+@inject IOptions<AppConfigOption> AppConfigOption
+@using Microsoft.Extensions.Options
+@using Project.Gawad.Application.Options
+@model Project.Gawad.Domain.Objects.VisitorLog.VisitorLogObject
+
+@{
+    Layout = "";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="@AppConfigOption.Value.AppName">
+    <meta name="author" content="PUP MSIT">
+    <title>Visitor - @AppConfigOption.Value.AppName</title>
+    <link rel="stylesheet" href="~/fontsource/index.css"/>
+    <link rel="stylesheet" href="~/overlayscrollbars/overlayscrollbars.min.css"/>
+    <link rel="stylesheet" href="~/bootstrap-icons/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="~/adminlte/css/adminlte.css"/>
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <style>
+
+        .main-body {
+            padding: 2% 10% 0% 10%;
+        }
+    </style>
+</head>
+<body>
+<!--begin::App Wrapper-->
+<div class="main-body">
+    @using (Html.BeginForm("Submit", "Visitors", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="card card-info card-outline mb-4">
+                <!--begin::Header-->
+                <div class="card-header">
+                    <div class="card-title">Visitor Log</div>
+                </div>
+                <!--end::Header-->
+                <div class="card-body"> <!--begin::Row-->
+                    <div class="row g-3"> <!--begin::Col-->
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.MiddleName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.LastName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Purpose, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Purpose, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Purpose, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                </div> <!--end::Body-->
+                <!--begin::Footer-->
+                <div class="card-footer">
+                    <button class="btn btn-info" type="submit">Submit form</button>
+                </div>
+                <!--end::Footer-->
+            </div>
+        </div>
+    }
+
+</div> <!--end::App Wrapper-->
+
+<!--begin::Script-->
+<script src="~/overlayscrollbars/overlayscrollbars.browser.es6.min.js"></script>
+<script src="~/bootstrap/bootstrap.min.js"></script>
+<!--end::Script-->
+
+</body>
+</html>

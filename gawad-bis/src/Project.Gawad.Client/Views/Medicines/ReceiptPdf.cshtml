@@ -1,0 +1,233 @@
+@model Project.Gawad.Domain.Objects.Medicine.MedicineTransactionListObject
+@{
+    Layout = null;
+}
+
+@functions {
+    string GetPrescriptionFromNotes(string? notes)
+    {
+        if (string.IsNullOrWhiteSpace(notes))
+            return null;
+
+        var notesParts = notes.Split(';');
+        foreach (var part in notesParts)
+        {
+            var trimmed = part.Trim();
+            if (trimmed.StartsWith("PRESCRIPTION:", StringComparison.OrdinalIgnoreCase))
+            {
+                return trimmed.Substring(13).Trim();
+            }
+        }
+        return null;
+    }
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Receipt - @Model.Id</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            padding: 20px;
+            background: #fff;
+            color: #000;
+        }
+        .receipt-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+        .doc-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #333;
+        }
+        .doc-header-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .doc-logo-small {
+            height: 70px;
+            width: 70px;
+            object-fit: contain;
+            margin: 0;
+            padding: 0;
+        }
+        .doc-logo-big {
+            height: 90px;
+            width: 90px;
+            object-fit: contain;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            top: 12px;
+        }
+        .doc-header-text {
+            text-align: center;
+        }
+        .title-line {
+            line-height: 1.2;
+        }
+        .title-top {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 14px;
+        }
+        .title-middle {
+            font-weight: 600;
+            font-size: 13px;
+            margin: 5px 0;
+        }
+        .title-main {
+            font-weight: 800;
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .receipt-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin: 15px 0 10px 0;
+        }
+        .receipt-info {
+            margin-bottom: 20px;
+        }
+        .receipt-info-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        .receipt-info-label {
+            font-weight: 600;
+            width: 120px;
+        }
+        .receipt-info-value {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        table td.text-end {
+            text-align: right;
+        }
+        .receipt-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="doc-header">
+            <!-- Header Text -->
+            <div class="doc-header-text">
+                <div class="title-line title-top">REPUBLIC OF THE PHILIPPINES</div>
+                <div class="title-line title-middle">CITY OF SAN JUAN</div>
+                <div class="title-line title-main">BARANGAY BALONG BATO</div>
+                <div style="font-size: 11px; margin-top: 5px;">
+                    <div>Tel. No. 8723-9561</div>
+                    <div>balongbato.sanjuan@gmail.com</div>
+                </div>
+            </div>
+
+            <!-- Four Logos Side by Side, Centered (placed directly above the receipt title) -->
+            <div class="doc-header-logos">
+                <!-- Left: Bagong Pilipinas Logo -->
+                @{
+                    var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+                    var bagongUrl = $"{baseUrl}/images/bagong.png";
+                    var sjcUrl = $"{baseUrl}/images/sjc.png";
+                    var logoUrl = $"{baseUrl}/images/logo.png";
+                    var makabagoUrl = $"{baseUrl}/images/makabago.png";
+                }
+                <img src="@bagongUrl" alt="Bagong Pilipinas Logo" class="doc-logo-small" />
+                <!-- Second: San Juan City Seal -->
+                <img src="@sjcUrl" alt="San Juan City Seal" class="doc-logo-small" />
+                <!-- Middle: Barangay Balong Bato Seal (larger) -->
+                <img src="@logoUrl" alt="Barangay Balong Bato Seal" class="doc-logo-big" />
+                <!-- Right: Makabagong San Juan Logo -->
+                <img src="@makabagoUrl" alt="Makabagong San Juan Logo" class="doc-logo-small" />
+            </div>
+
+            <div class="doc-header-text">
+                <div class="receipt-title">Barangay Health Office - Receipt</div>
+                <div style="margin-top: 10px;">
+                    <span style="background: #6c757d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">@Model.TransactionTypeName</span>
+                    <span style="margin-left: 10px; font-size: 11px;">@Model.TransactionDate.ToString("MM/dd/yyyy HH:mm")</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="receipt-info">
+            <div class="receipt-info-row">
+                <div class="receipt-info-label">Recipient:</div>
+                <div class="receipt-info-value">@(Model.RecipientName ?? "N/A")</div>
+            </div>
+            @{
+                var prescription = GetPrescriptionFromNotes(Model.Notes);
+            }
+            @if (!string.IsNullOrWhiteSpace(prescription))
+            {
+                <div class="receipt-info-row">
+                    <div class="receipt-info-label">Prescription:</div>
+                    <div class="receipt-info-value">@prescription</div>
+                </div>
+            }
+            <div class="receipt-info-row">
+                <div class="receipt-info-label">Reason:</div>
+                <div class="receipt-info-value">@(Model.Reason ?? "N/A")</div>
+            </div>
+            <div class="receipt-info-row">
+                <div class="receipt-info-label">Reference:</div>
+                <div class="receipt-info-value">@Model.Id</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th style="text-align: right;">Quantity (Pieces)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.MedicineName</td>
+                    <td class="text-end">@Model.Quantity.ToString("N0")</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="receipt-footer">
+            <div>Note: This receipt confirms medicine dispensed by the Barangay Health Office.</div>
+        </div>
+    </div>
+</body>
+</html>
+

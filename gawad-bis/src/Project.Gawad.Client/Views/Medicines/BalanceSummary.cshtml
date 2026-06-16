@@ -1,0 +1,86 @@
+@model Project.Gawad.Domain.Objects.Medicine.ReportFilterObject
+@{
+    ViewData["Title"] = "Balance Summary";
+    ViewData["HeaderTitle"] = "Balance Summary";
+    var summary = ViewBag.Summary as Project.Gawad.Domain.Objects.Medicine.MedicineBalanceSummaryObject;
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Filter</h3>
+        </div>
+        <form asp-action="BalanceSummary" method="post">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label asp-for="StartDate" class="form-label"></label>
+                        <input asp-for="StartDate" class="form-control" type="date" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="EndDate" class="form-label"></label>
+                        <input asp-for="EndDate" class="form-control" type="date" />
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end gap-2">
+                        <button type="submit" class="btn btn-primary">Generate</button>
+                        @if (summary != null)
+                        {
+                            <a class="btn btn-success" href="@Url.Action("ExportBalanceSummary", new { StartDate = Model?.StartDate, EndDate = Model?.EndDate })">Export CSV</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (summary != null)
+    {
+        <div class="card card-primary card-outline mt-3">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.ReportTitle</h3>
+                <div class="card-tools"><small>Generated: @ViewBag.GeneratedDate</small></div>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="border rounded p-3 bg-body-tertiary">
+                            <div class="text-secondary">Start Date</div>
+                            <div class="fw-bold">@summary.StartDate.ToString("MM/dd/yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3 bg-body-tertiary">
+                            <div class="text-secondary">End Date</div>
+                            <div class="fw-bold">@summary.EndDate.ToString("MM/dd/yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3 bg-body-tertiary">
+                            <div class="text-secondary">Total Purchases</div>
+                            <div class="fw-bold">@summary.TotalPurchases.ToString("F2")</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3 bg-body-tertiary">
+                            <div class="text-secondary">Total Usage Value</div>
+                            <div class="fw-bold">@summary.TotalUsageValue.ToString("F2")</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 mt-2">
+                    <div class="col-md-3">
+                        <div class="border rounded p-3 bg-body-tertiary">
+                            <div class="text-secondary">Net (Purchases − Usage)</div>
+                            <div class="fw-bold">@summary.Net.ToString("F2")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+

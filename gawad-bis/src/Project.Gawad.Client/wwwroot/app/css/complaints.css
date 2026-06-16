@@ -1,0 +1,376 @@
+/* Complaints Module Specific Styles */
+
+/* DataTables spacing improvements */
+.dataTables_wrapper {
+    padding: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 2.5rem !important;
+    margin-bottom: 1rem !important;
+    text-align: center;
+}
+
+/* Higher specificity for DataTables pagination container */
+div.dt-container div.dt-paging {
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Center align all pagination elements */
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_paginate ul,
+.dataTables_wrapper .dataTables_paginate li {
+    text-align: center !important;
+}
+
+/* Center align pagination buttons */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+/* More specific pagination centering rules */
+.dataTables_wrapper .dataTables_paginate {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_paginate ul {
+    text-align: center !important;
+    display: inline-block !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate li {
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+/* Force center alignment for pagination container */
+div.dataTables_wrapper div.dataTables_paginate {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Center pagination for all table IDs */
+#tblMain + .dataTables_wrapper .dataTables_paginate {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Universal pagination centering - highest specificity */
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_paginate ul,
+.dataTables_wrapper .dataTables_paginate li,
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    text-align: center !important;
+}
+
+.dataTables_wrapper .dataTables_paginate ul {
+    display: inline-block !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate li {
+    display: inline-block !important;
+    margin: 0 2px !important;
+}
+
+/* Force pagination centering with even higher specificity */
+div.dataTables_wrapper div.dataTables_paginate {
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    text-align: center !important;
+    display: inline-block !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination li {
+    display: inline-block !important;
+    margin: 0 2px !important;
+    text-align: center !important;
+}
+
+/* Target specific table pagination */
+#tblMain_wrapper .dataTables_paginate {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+#tblMain_wrapper .dataTables_paginate ul {
+    text-align: center !important;
+    display: inline-block !important;
+    margin: 0 auto !important;
+}
+
+.dataTables_wrapper .dataTables_info {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.dataTables_wrapper .dataTables_length {
+    margin-bottom: 1rem !important;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 1rem !important;
+}
+
+.dataTables_wrapper .dt-buttons {
+    margin-top: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
+}
+
+.dataTables_wrapper .dt-buttons .btn {
+    margin-right: 0.5rem;
+}
+
+.dataTables_wrapper .dt-buttons .btn:last-child {
+    margin-right: 0;
+}
+
+/* Pagination styling */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.375rem 0.75rem;
+    margin: 0 0.125rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    color: #007bff;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+    color: #0056b3;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    color: #6c757d;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+/* Card spacing improvements */
+.complaint-card {
+    margin-bottom: 2rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.complaint-card .card-header {
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.complaint-card .card-body {
+    padding: 1.5rem;
+}
+
+.complaint-card .card-footer {
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Form spacing improvements */
+.complaint-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.complaint-form .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.complaint-form .form-label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.complaint-form .form-control {
+    margin-top: 0.25rem;
+}
+
+/* Button spacing */
+.btn-group .btn {
+    margin-right: 0.75rem;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+.btn-spacing {
+    margin-right: 0.75rem;
+}
+
+.btn-spacing:last-child {
+    margin-right: 0;
+}
+
+/* Table improvements */
+.complaint-table {
+    margin-bottom: 0;
+}
+
+/* General DataTable cell padding for better readability */
+#tblMain tbody td {
+    padding: 0.5rem 0.5rem !important;
+    vertical-align: middle;
+}
+
+.complaint-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.complaint-table tbody td {
+    padding: 0.5rem 0.5rem;
+    vertical-align: middle;
+}
+
+.complaint-table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Action buttons */
+.action-btn {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    margin: 0 0.25rem;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease-in-out;
+}
+
+.action-btn:hover {
+    color: #0056b3;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.action-btn.edit {
+    color: #ffc107;
+}
+
+.action-btn.edit:hover {
+    color: #e0a800;
+}
+
+.action-btn.delete {
+    color: #dc3545;
+}
+
+.action-btn.delete:hover {
+    color: #c82333;
+}
+
+/* Status badges */
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.closed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-badge.resolved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .complaint-card .card-body {
+        padding: 1rem;
+    }
+    
+    .complaint-card .card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .complaint-card .card-footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 1rem !important;
+    }
+    
+    .dataTables_wrapper .dataTables_info {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+}
+
+/* Loading states */
+.loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modal improvements */
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+}

@@ -1,0 +1,83 @@
+@model Project.Gawad.Domain.Objects.Medicine.ReportFilterObject
+@{
+    ViewData["Title"] = "Dispensed Medicines";
+    ViewData["HeaderTitle"] = "Dispensed Medicines";
+    var reportData = ViewBag.ReportData as IEnumerable<Project.Gawad.Domain.Objects.Medicine.MedicineTransactionListObject>;
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Filter</h3>
+        </div>
+        <form asp-action="DispensedLog" method="post">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label asp-for="StartDate" class="form-label"></label>
+                        <input asp-for="StartDate" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="EndDate" class="form-label"></label>
+                        <input asp-for="EndDate" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end gap-2">
+                        <button type="submit" class="btn btn-primary">Generate</button>
+                        @if (reportData != null)
+                        {
+                            <a class="btn btn-success" href="@Url.Action("ExportDispensedLog", new { StartDate = Model?.StartDate, EndDate = Model?.EndDate })">Export CSV</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (reportData != null)
+    {
+        <div class="card card-primary card-outline mt-3">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.ReportTitle</h3>
+                <div class="card-tools"><small>Generated: @ViewBag.GeneratedDate</small></div>
+            </div>
+            <div class="card-body table-responsive">
+                @if (!reportData.Any())
+                {
+                    <div class="alert alert-info mb-0">No dispensed transactions found for the selected date range.</div>
+                }
+                else
+                {
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Medicine</th>
+                                <th class="text-end">Quantity</th>
+                                <th>Recipient</th>
+                                <th>Reason</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var d in reportData)
+                        {
+                            <tr>
+                                <td>@d.TransactionDate.ToString("MM/dd/yyyy")</td>
+                                <td>@d.MedicineName</td>
+                                <td class="text-end">@d.Quantity</td>
+                                <td>@(d.RecipientName ?? "-")</td>
+                                <td>@(d.Reason ?? "-")</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Receipt", new { id = d.Id })">Receipt</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,38 @@
+@model Project.Gawad.Domain.Objects.Cash.CashSessionDetailObject
+@{
+    ViewData["Title"] = "Cash Session Details";
+    ViewData["HeaderTitle"] = "Cash Session Details";
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Session Details</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Session Date</dt>
+                <dd class="col-sm-9">@Model.SessionDate.ToString("MM/dd/yyyy")</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-@(Model.Status == Project.Gawad.Domain.Enums.Cash.CashSessionStatus.Open ? "success" : "secondary")">@Model.StatusName</span>
+                </dd>
+                <dt class="col-sm-3">Opened By</dt>
+                <dd class="col-sm-9">@Model.OpenedByName</dd>
+                <dt class="col-sm-3">Opening Float</dt>
+                <dd class="col-sm-9">@Model.OpeningFloat.ToString("F2")</dd>
+                <dt class="col-sm-3">Total Sales</dt>
+                <dd class="col-sm-9">@Model.TotalSales.ToString("F2")</dd>
+                <dt class="col-sm-3">Total Payments</dt>
+                <dd class="col-sm-9">@Model.TotalPayments.ToString("F2")</dd>
+                <dt class="col-sm-3">Expected Amount</dt>
+                <dd class="col-sm-9">@(Model.ExpectedAmount?.ToString("F2") ?? "N/A")</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+        <WWWRoot>.\wwwroot\</WWWRoot>
+        <UserSecretsId>aspnet-Project.Gawad.Client-d190107b-c4bb-492c-a869-80238d9052b2</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Remove="wwwroot\adminlte\images\logo.jpeg" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DinkToPdfIncludesDependencies" Version="1.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+        <PackageReference Include="PDFsharp" Version="6.1.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
+    </ItemGroup>
+
+    <Target Name="CopyNativeLibraries" AfterTargets="ResolveNuGetPackageAssets">
+        <ItemGroup>
+            <NativeLibs Include="$(NuGetPackageRoot)dinktopdfincludesdependencies\1.0.8\lib\netcoreapp2.0\*.dll" />
+        </ItemGroup>
+        <Copy SourceFiles="@(NativeLibs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    </Target>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\adminlte\images\" />
+        <Folder Include="wwwroot\bootstrap-datatables\" />
+        <Folder Include="wwwroot\bootstrap-icons\fonts\" />
+        <Folder Include="wwwroot\fontsource\files\" />
+        <Folder Include="wwwroot\pdfobject\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Views\Shared\PartialViews\_FooterPartialView.cshtml" />
+        <AdditionalFiles Include="Views\Shared\PartialViews\_SideBarPartialView.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Project.Gawad.Application\Project.Gawad.Application.csproj" />
+        <ProjectReference Include="..\Project.Gawad.Core\Project.Gawad.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="Views\Templates\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\adminlte\assets\img\logo.jpeg" />
+    </ItemGroup>
+
+</Project>

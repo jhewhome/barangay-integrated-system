@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en"> <!--begin::Head-->
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>AdminLTE 4 | General UI Elements</title><!--begin::Primary Meta Tags-->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="AdminLTE 4 | General UI Elements" name="title">
+    <meta content="ColorlibHQ" name="author">
+    <meta content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."
+          name="description">
+    <meta content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"
+          name="keywords">
+    <!--end::Primary Meta Tags--><!--begin::Fonts-->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+          integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" rel="stylesheet"><!--end::Fonts-->
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link crossorigin="anonymous"
+          href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css"
+          integrity="sha256-dSokZseQNT08wYEWiz5iLI8QPlKxG+TswNRD8k35cpg=" rel="stylesheet">
+    <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link crossorigin="anonymous"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css"
+          integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" rel="stylesheet">
+    <!--end::Third Party Plugin(Bootstrap Icons)--><!--begin::Required Plugin(AdminLTE)-->
+    <link href="../../../dist/css/adminlte.css" rel="stylesheet"><!--end::Required Plugin(AdminLTE)-->
+</head> <!--end::Head--> <!--begin::Body-->
+
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
+<div class="app-wrapper"> <!--begin::Header-->
+    <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Start Navbar Links-->
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i
+                        class="bi bi-list"></i> </a></li>
+                <li class="nav-item d-none d-md-block"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item d-none d-md-block"><a class="nav-link" href="#">Contact</a></li>
+            </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
+            <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
+                <li class="nav-item"><a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i
+                        class="bi bi-search"></i> </a></li> <!--end::Navbar Search-->
+                <!--begin::Messages Dropdown Menu-->
+                <li class="nav-item dropdown"><a class="nav-link" data-bs-toggle="dropdown" href="#"> <i
+                        class="bi bi-chat-text"></i> <span class="navbar-badge badge text-bg-danger">3</span> </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"><a class="dropdown-item" href="#">
+                        <!--begin::Message-->
+                        <div class="d-flex">
+                            <div class="flex-shrink-0"><img alt="User Avatar"
+                                                            class="img-size-50 rounded-circle me-3"
+                                                            src="../../../dist/assets/img/user1-128x128.jpg">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h3 class="dropdown-item-title">
+                                    Brad Diesel
+                                    <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
+                                </h3>
+                                <p class="fs-7">Call me whenever you can...</p>
+                                <p class="fs-7 text-secondary"><i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                </p>
+                            </div>
+                        </div> <!--end::Message-->
+                    </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"> <!--begin::Message-->
+                            <div class="d-flex">
+                                <div class="flex-shrink-0"><img alt="User Avatar"
+                                                                class="img-size-50 rounded-circle me-3"
+                                                                src="../../../dist/assets/img/user8-128x128.jpg"></div>
+                                <div class="flex-grow-1">
+                                    <h3 class="dropdown-item-title">
+                                        John Pierce
+                                        <span class="float-end fs-7 text-secondary"> <i
+                                                class="bi bi-star-fill"></i> </span>
+                                    </h3>
+                                    <p class="fs-7">I got your message bro</p>
+                                    <p class="fs-7 text-secondary"><i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                    </p>
+                                </div>
+                            </div> <!--end::Message-->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"> <!--begin::Message-->
+                            <div class="d-flex">
+                                <div class="flex-shrink-0"><img alt="User Avatar"
+                                                                class="img-size-50 rounded-circle me-3"
+                                                                src="../../../dist/assets/img/user3-128x128.jpg"></div>
+                                <div class="flex-grow-1">
+                                    <h3 class="dropdown-item-title">
+                                        Nora Silvester
+                                        <span class="float-end fs-7 text-warning"> <i
+                                                class="bi bi-star-fill"></i> </span>
+                                    </h3>
+                                    <p class="fs-7">The subject goes here</p>
+                                    <p class="fs-7 text-secondary"><i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                    </p>
+                                </div>
+                            </div> <!--end::Message-->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item dropdown-footer" href="#">See All Messages</a>
+                    </div>
+                </li> <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
+                <li class="nav-item dropdown"><a class="nav-link" data-bs-toggle="dropdown" href="#"> <i
+                        class="bi bi-bell-fill"></i> <span class="navbar-badge badge text-bg-warning">15</span> </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"><span
+                            class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"> <i class="bi bi-envelope me-2"></i> 4 new messages
+                            <span class="float-end text-secondary fs-7">3 mins</span> </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"> <i class="bi bi-people-fill me-2"></i> 8 friend requests
+                            <span class="float-end text-secondary fs-7">12 hours</span> </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"> <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+                            <span class="float-end text-secondary fs-7">2 days</span> </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item dropdown-footer" href="#">
+                            See All Notifications
+                        </a>
+                    </div>
+                </li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
+                <li class="nav-item"><a class="nav-link" data-lte-toggle="fullscreen" href="#"> <i
+                        class="bi bi-arrows-fullscreen" data-lte-icon="maximize"></i> <i class="bi bi-fullscreen-exit"
+                                                                                         data-lte-icon="minimize"
+                                                                                         style="display: none;"></i>
+                </a></li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
+                <li class="nav-item dropdown user-menu"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                                                           href="#"> <img
+                        alt="User Image" class="user-image rounded-circle shadow"
+                        src="../../../dist/assets/img/user2-160x160.jpg"> <span class="d-none d-md-inline">Alexander Pierce</span>
+                </a>
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
+                        <li class="user-header text-bg-primary"><img alt="User Image"
+                                                                     class="rounded-circle shadow"
+                                                                     src="../../../dist/assets/img/user2-160x160.jpg">
+                            <p>
+                                Alexander Pierce - Web Developer
+                                <small>Member since Nov. 2023</small>
+                            </p>
+                        </li> <!--end::User Image--> <!--begin::Menu Body-->
+                        <li class="user-body"> <!--begin::Row-->
+                            <div class="row">
+                                <div class="col-4 text-center"><a href="#">Followers</a></div>
+                                <div class="col-4 text-center"><a href="#">Sales</a></div>
+                                <div class="col-4 text-center"><a href="#">Friends</a></div>
+                            </div> <!--end::Row-->
+                        </li> <!--end::Menu Body--> <!--begin::Menu Footer-->
+                        <li class="user-footer"><a class="btn btn-default btn-flat" href="#">Profile</a> <a
+                                class="btn btn-default btn-flat float-end"
+                                href="#">Sign
+                            out</a></li> <!--end::Menu Footer-->
+                    </ul>
+                </li> <!--end::User Menu Dropdown-->
+            </ul> <!--end::End Navbar Links-->
+        </div> <!--end::Container-->
+    </nav> <!--end::Header--> <!--begin::Sidebar-->
+    <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
+        <div class="sidebar-brand"> <!--begin::Brand Link--> <a class="brand-link" href="../index.html">
+            <!--begin::Brand Image--> <img alt="AdminLTE Logo" class="brand-image opacity-75 shadow"
+                                           src="../../../dist/assets/img/AdminLTELogo.png"> <!--end::Brand Image-->
+            <!--begin::Brand Text--> <span class="brand-text fw-light">AdminLTE 4</span> <!--end::Brand Text--> </a>
+            <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+        <div class="sidebar-wrapper">
+            <nav class="mt-2"> <!--begin::Sidebar Menu-->
+                <ul class="nav sidebar-menu flex-column" data-accordion="false" data-lte-toggle="treeview" role="menu">
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Dashboard
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="../index.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Dashboard v1</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../index2.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Dashboard v2</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../index3.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Dashboard v3</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../generate/theme.html"> <i
+                            class="nav-icon bi bi-palette"></i>
+                        <p>Theme Generate</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-box-seam-fill"></i>
+                        <p>
+                            Widgets
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="../widgets/small-box.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Small Box</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../widgets/info-box.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>info Box</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../widgets/cards.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Cards</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-clipboard-fill"></i>
+                        <p>
+                            Layout Options
+                            <span class="nav-badge badge text-bg-secondary me-3">6</span> <i
+                                class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="../layout/unfixed-sidebar.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Default Sidebar</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../layout/fixed-sidebar.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Fixed Sidebar</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../layout/layout-custom-area.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Layout <small>+ Custom Area </small></p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../layout/sidebar-mini.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Sidebar Mini</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../layout/collapsed-sidebar.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Sidebar Mini <small>+ Collapsed</small></p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../layout/logo-switch.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Sidebar Mini <small>+ Logo Switch</small></p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../layout/layout-rtl.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Layout RTL</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item menu-open"><a class="nav-link active" href="#"> <i
+                            class="nav-icon bi bi-tree-fill"></i>
+                        <p>
+                            UI Elements
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link active" href="../UI/general.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>General</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../UI/icons.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Icons</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../UI/timeline.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Timeline</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-pencil-square"></i>
+                        <p>
+                            Forms
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link active" href="../forms/general.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>General Elements</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-table"></i>
+                        <p>
+                            Tables
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="../tables/simple.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Simple Tables</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-header">EXAMPLES</li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                        <p>
+                            Auth
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="#"> <i
+                                    class="nav-icon bi bi-box-arrow-in-right"></i>
+                                <p>
+                                    Version 1
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item"><a class="nav-link" href="../examples/login.html"> <i
+                                            class="nav-icon bi bi-circle"></i>
+                                        <p>Login</p>
+                                    </a></li>
+                                    <li class="nav-item"><a class="nav-link" href="../examples/register.html"> <i
+                                            class="nav-icon bi bi-circle"></i>
+                                        <p>Register</p>
+                                    </a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="#"> <i
+                                    class="nav-icon bi bi-box-arrow-in-right"></i>
+                                <p>
+                                    Version 2
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item"><a class="nav-link" href="../examples/login-v2.html"> <i
+                                            class="nav-icon bi bi-circle"></i>
+                                        <p>Login</p>
+                                    </a></li>
+                                    <li class="nav-item"><a class="nav-link" href="../examples/register-v2.html"> <i
+                                            class="nav-icon bi bi-circle"></i>
+                                        <p>Register</p>
+                                    </a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="../examples/lockscreen.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Lockscreen</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-header">DOCUMENTATIONS</li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/introduction.html"> <i
+                            class="nav-icon bi bi-download"></i>
+                        <p>Installation</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/layout.html"> <i
+                            class="nav-icon bi bi-grip-horizontal"></i>
+                        <p>Layout</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/color-mode.html"> <i
+                            class="nav-icon bi bi-star-half"></i>
+                        <p>Color Mode</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-ui-checks-grid"></i>
+                        <p>
+                            Components
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="../docs/components/main-header.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Main Header</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="../docs/components/main-sidebar.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Main Sidebar</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-filetype-js"></i>
+                        <p>
+                            Javascript
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="../docs/javascript/treeview.html"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Treeview</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/browser-support.html"> <i
+                            class="nav-icon bi bi-browser-edge"></i>
+                        <p>Browser Support</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/how-to-contribute.html"> <i
+                            class="nav-icon bi bi-hand-thumbs-up-fill"></i>
+                        <p>How To Contribute</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/faq.html"> <i
+                            class="nav-icon bi bi-question-circle-fill"></i>
+                        <p>FAQ</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="../docs/license.html"> <i
+                            class="nav-icon bi bi-patch-check-fill"></i>
+                        <p>License</p>
+                    </a></li>
+                    <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle-fill"></i>
+                        <p>Level 1</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle-fill"></i>
+                        <p>
+                            Level 1
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle"></i>
+                                <p>Level 2</p>
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle"></i>
+                                <p>
+                                    Level 2
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item"><a class="nav-link" href="#"> <i
+                                            class="nav-icon bi bi-record-circle-fill"></i>
+                                        <p>Level 3</p>
+                                    </a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#"> <i
+                                            class="nav-icon bi bi-record-circle-fill"></i>
+                                        <p>Level 3</p>
+                                    </a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#"> <i
+                                            class="nav-icon bi bi-record-circle-fill"></i>
+                                        <p>Level 3</p>
+                                    </a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle"></i>
+                                <p>Level 2</p>
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle-fill"></i>
+                        <p>Level 1</p>
+                    </a></li>
+                    <li class="nav-header">LABELS</li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle text-danger"></i>
+                        <p class="text">Important</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i
+                            class="nav-icon bi bi-circle text-warning"></i>
+                        <p>Warning</p>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> <i class="nav-icon bi bi-circle text-info"></i>
+                        <p>Informational</p>
+                    </a></li>
+                </ul> <!--end::Sidebar Menu-->
+            </nav>
+        </div> <!--end::Sidebar Wrapper-->
+    </aside> <!--end::Sidebar--> <!--begin::App Main-->
+    <main class="app-main"> <!--begin::App Content Header-->
+        <div class="app-content-header"> <!--begin::Container-->
+            <div class="container-fluid"> <!--begin::Row-->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0">General UI Elements</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-end">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li aria-current="page" class="breadcrumb-item active"> General UI Elements</li>
+                        </ol>
+                    </div>
+                </div> <!--end::Row-->
+            </div> <!--end::Container-->
+        </div> <!--end::App Content Header--> <!--begin::App Content-->
+        <div class="app-content"> <!--begin::Container-->
+            <div class="container-fluid"> <!--begin::Row-->
+                <div class="row g-4"> <!--begin::Col-->
+                    <div class="col-12">
+                        <div class="callout callout-info">
+                            For detailed documentation of Components visit <a
+                                class="callout-link" href="https://getbootstrap.com/docs/5.3/components/"
+                                rel="noopener noreferrer" target="_blank">
+                            Bootstrap Components
+                        </a></div>
+                    </div> <!--end::Col--> <!--begin::Col-->
+                    <div class="col-md-6"> <!--begin::Accordion-->
+                        <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Accordion</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button aria-controls="collapseOne" aria-expanded="true"
+                                                    class="accordion-button"
+                                                    data-bs-target="#collapseOne" data-bs-toggle="collapse"
+                                                    type="button">
+                                                Accordion Item #1
+                                            </button>
+                                        </h2>
+                                        <div class="accordion-collapse collapse show" data-bs-parent="#accordionExample"
+                                             id="collapseOne">
+                                            <div class="accordion-body"><strong>This is the first item's accordion
+                                                body.</strong> It is shown by default, until the collapse plugin
+                                                adds the appropriate classes that we use to style
+                                                each element. These classes control the overall
+                                                appearance, as well as the showing and hiding via
+                                                CSS transitions. You can modify any of this with
+                                                custom CSS or overriding our default variables. It's
+                                                also worth noting that just about any HTML can go
+                                                within the <code>.accordion-body</code>, though the
+                                                transition does limit overflow.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button aria-controls="collapseTwo" aria-expanded="false"
+                                                    class="accordion-button collapsed" data-bs-target="#collapseTwo"
+                                                    data-bs-toggle="collapse" type="button">
+                                                Accordion Item #2
+                                            </button>
+                                        </h2>
+                                        <div class="accordion-collapse collapse" data-bs-parent="#accordionExample"
+                                             id="collapseTwo">
+                                            <div class="accordion-body"><strong>This is the second item's accordion
+                                                body.</strong> It is hidden by default, until the collapse plugin
+                                                adds the appropriate classes that we use to style
+                                                each element. These classes control the overall
+                                                appearance, as well as the showing and hiding via
+                                                CSS transitions. You can modify any of this with
+                                                custom CSS or overriding our default variables. It's
+                                                also worth noting that just about any HTML can go
+                                                within the <code>.accordion-body</code>, though the
+                                                transition does limit overflow.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button aria-controls="collapseThree" aria-expanded="false"
+                                                    class="accordion-button collapsed" data-bs-target="#collapseThree"
+                                                    data-bs-toggle="collapse" type="button">
+                                                Accordion Item #3
+                                            </button>
+                                        </h2>
+                                        <div class="accordion-collapse collapse" data-bs-parent="#accordionExample"
+                                             id="collapseThree">
+                                            <div class="accordion-body"><strong>This is the third item's accordion
+                                                body.</strong> It is hidden by default, until the collapse plugin
+                                                adds the appropriate classes that we use to style
+                                                each element. These classes control the overall
+                                                appearance, as well as the showing and hiding via
+                                                CSS transitions. You can modify any of this with
+                                                custom CSS or overriding our default variables. It's
+                                                also worth noting that just about any HTML can go
+                                                within the <code>.accordion-body</code>, though the
+                                                transition does limit overflow.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Accordion--> <!--begin::Alert-->
+                        <div class="card card-success card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Alert</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="alert alert-primary" role="alert">
+                                    A simple primary alert with <a class="alert-link" href="#">an example link</a>. Give
+                                    it a click if you like.
+                                </div>
+                                <div class="alert alert-secondary" role="alert">
+                                    A simple secondary alert with <a class="alert-link" href="#">an example link</a>.
+                                    Give it a click if you like.
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    A simple success alert with <a class="alert-link" href="#">an example link</a>. Give
+                                    it a click if you like.
+                                </div>
+                                <div class="alert alert-danger" role="alert">
+                                    A simple danger alert with <a class="alert-link" href="#">an example link</a>. Give
+                                    it a click if you like.
+                                </div>
+                                <div class="alert alert-warning" role="alert">
+                                    A simple warning alert with <a class="alert-link" href="#">an example link</a>. Give
+                                    it a click if you like.
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    A simple info alert with <a class="alert-link" href="#">an example link</a>. Give it
+                                    a click if you like.
+                                </div>
+                                <div class="alert alert-light" role="alert">
+                                    A simple light alert with <a class="alert-link" href="#">an example link</a>. Give
+                                    it a click if you like.
+                                </div>
+                                <div class="alert alert-dark" role="alert">
+                                    A simple dark alert with <a class="alert-link" href="#">an example link</a>. Give it
+                                    a click if you like.
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Alert--> <!--begin::Badge-->
+                        <div class="card card-warning card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Badge</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <h1>
+                                    Example heading <span class="badge bg-secondary">New</span></h1>
+                                <h2>
+                                    Example heading <span class="badge bg-secondary">New</span></h2>
+                                <h3>
+                                    Example heading <span class="badge bg-secondary">New</span></h3>
+                                <h4>
+                                    Example heading <span class="badge bg-secondary">New</span></h4>
+                                <h5>
+                                    Example heading <span class="badge bg-secondary">New</span></h5>
+                                <h6>
+                                    Example heading <span class="badge bg-secondary">New</span></h6>
+                                <hr>
+                                <button class="btn btn-primary" type="button">
+                                    Notifications <span class="badge text-bg-secondary">4</span></button>
+                                <hr>
+                                <button class="btn btn-primary position-relative" type="button">
+                                    Inbox
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            99+
+                                            <span class="visually-hidden">unread messages</span> </span></button>
+                                <hr>
+                                <button class="btn btn-primary position-relative" type="button">
+                                    Profile
+                                    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"> <span
+                                            class="visually-hidden">New alerts</span> </span></button>
+                                <hr>
+                                <span class="badge text-bg-primary">Primary</span> <span
+                                    class="badge text-bg-secondary">Secondary</span> <span
+                                    class="badge text-bg-success">Success</span> <span class="badge text-bg-danger">Danger</span>
+                                <span class="badge text-bg-warning">Warning</span> <span
+                                    class="badge text-bg-info">Info</span> <span
+                                    class="badge text-bg-light">Light</span> <span
+                                    class="badge text-bg-dark">Dark</span>
+                                <hr>
+                                <span class="badge rounded-pill text-bg-primary">Primary</span> <span
+                                    class="badge rounded-pill text-bg-secondary">Secondary</span> <span
+                                    class="badge rounded-pill text-bg-success">Success</span> <span
+                                    class="badge rounded-pill text-bg-danger">Danger</span> <span
+                                    class="badge rounded-pill text-bg-warning">Warning</span> <span
+                                    class="badge rounded-pill text-bg-info">Info</span> <span
+                                    class="badge rounded-pill text-bg-light">Light</span> <span
+                                    class="badge rounded-pill text-bg-dark">Dark</span>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Badge--> <!--begin::Button-->
+                        <div class="card card-danger card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Button</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <button class="btn btn-primary mb-2" type="button">Primary</button>
+                                <button class="btn btn-secondary mb-2" type="button">Secondary</button>
+                                <button class="btn btn-success mb-2" type="button">Success</button>
+                                <button class="btn btn-danger mb-2" type="button">Danger</button>
+                                <button class="btn btn-warning mb-2" type="button">Warning</button>
+                                <button class="btn btn-info mb-2" type="button">Info</button>
+                                <button class="btn btn-light mb-2" type="button">Light</button>
+                                <button class="btn btn-dark mb-2" type="button">Dark</button>
+                                <button class="btn btn-link mb-2" type="button">Link</button>
+                                <hr>
+                                <button class="btn btn-primary mb-2" disabled type="button">Primary (disabled)</button>
+                                <button class="btn btn-secondary mb-2" disabled type="button">Secondary (disabled)
+                                </button>
+                                <button class="btn btn-success mb-2" disabled type="button">Success (disabled)</button>
+                                <button class="btn btn-danger mb-2" disabled type="button">Danger (disabled)</button>
+                                <button class="btn btn-warning mb-2" disabled type="button">Warning (disabled)</button>
+                                <button class="btn btn-info mb-2" disabled type="button">Info (disabled)</button>
+                                <hr>
+                                <button class="btn btn-outline-primary mb-2" type="button">Primary</button>
+                                <button class="btn btn-outline-secondary mb-2" type="button">Secondary</button>
+                                <button class="btn btn-outline-success mb-2" type="button">Success</button>
+                                <button class="btn btn-outline-danger mb-2" type="button">Danger</button>
+                                <button class="btn btn-outline-warning mb-2" type="button">Warning</button>
+                                <button class="btn btn-outline-info mb-2" type="button">Info</button>
+                                <button class="btn btn-outline-light mb-2" type="button">Light</button>
+                                <button class="btn btn-outline-dark mb-2" type="button">Dark</button>
+                                <hr>
+                                <button class="btn btn-primary btn-lg" type="button">Large button</button>
+                                <button class="btn btn-warning btn-sm" type="button">Small button</button>
+                                <button class="btn btn-danger"
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                        type="button">
+                                    Custom button
+                                </button>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Button-->
+                    </div> <!--end::Col--> <!--begin::Col-->
+                    <div class="col-md-6"> <!--begin::Button Group-->
+                        <div class="card card-info card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Button Group</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div aria-label="Basic example" class="btn-group mb-2" role="group">
+                                    <button class="btn btn-primary" type="button">Left</button>
+                                    <button class="btn btn-primary" type="button">Middle</button>
+                                    <button class="btn btn-primary" type="button">Right</button>
+                                </div>
+                                <div aria-label="Basic mixed styles example" class="btn-group mb-2" role="group">
+                                    <button class="btn btn-danger" type="button">Left</button>
+                                    <button class="btn btn-warning" type="button">Middle</button>
+                                    <button class="btn btn-success" type="button">Right</button>
+                                </div>
+                                <div aria-label="Basic outlined example" class="btn-group mb-2" role="group">
+                                    <button class="btn btn-outline-primary" type="button">Left</button>
+                                    <button class="btn btn-outline-primary" type="button">Middle</button>
+                                    <button class="btn btn-outline-primary" type="button">Right</button>
+                                </div>
+                                <hr>
+                                <div aria-label="Basic checkbox toggle button group" class="btn-group mb-2"
+                                     role="group"><input autocomplete="off"
+                                                         class="btn-check"
+                                                         id="btncheck1"
+                                                         type="checkbox"> <label
+                                        class="btn btn-outline-primary" for="btncheck1">Checkbox 1</label> <input
+                                        autocomplete="off" class="btn-check" id="btncheck2" type="checkbox"> <label
+                                        class="btn btn-outline-primary" for="btncheck2">Checkbox 2</label> <input
+                                        autocomplete="off" class="btn-check" id="btncheck3" type="checkbox"> <label
+                                        class="btn btn-outline-primary" for="btncheck3">Checkbox 3</label></div>
+                                <div aria-label="Basic radio toggle button group" class="btn-group mb-2" role="group">
+                                    <input autocomplete="off" checked class="btn-check" id="btnradio1"
+                                           name="btnradio" type="radio"> <label class="btn btn-outline-primary"
+                                                                                for="btnradio1">Radio 1</label> <input
+                                        autocomplete="off" class="btn-check" id="btnradio2" name="btnradio"
+                                        type="radio"> <label class="btn btn-outline-primary" for="btnradio2">Radio
+                                    2</label> <input autocomplete="off" class="btn-check" id="btnradio3" name="btnradio"
+                                                     type="radio"> <label class="btn btn-outline-primary"
+                                                                          for="btnradio3">Radio 3</label></div>
+                                <hr>
+                                <div aria-label="Button group with nested dropdown" class="btn-group mb-2" role="group">
+                                    <button class="btn btn-primary" type="button">1</button>
+                                    <button class="btn btn-primary" type="button">2</button>
+                                    <div class="btn-group" role="group">
+                                        <button aria-expanded="false" class="btn btn-primary dropdown-toggle"
+                                                data-bs-toggle="dropdown" type="button">
+                                            Dropdown
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                                            <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Button Group--> <!--begin::Collapse-->
+                        <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Collapse</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <p class="d-inline-flex gap-1"><a aria-controls="collapseExample" aria-expanded="false"
+                                                                  class="btn btn-primary" data-bs-toggle="collapse"
+                                                                  href="#collapseExample" role="button">
+                                    Link with href
+                                </a>
+                                    <button aria-controls="collapseExample" aria-expanded="false"
+                                            class="btn btn-success"
+                                            data-bs-target="#collapseExample" data-bs-toggle="collapse"
+                                            type="button">
+                                        Button with data-bs-target
+                                    </button>
+                                </p>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        Some placeholder content for the collapse component.
+                                        This panel is hidden by default but revealed when the
+                                        user activates the relevant trigger.
+                                    </div>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Collapse--> <!--begin::Dropdowns-->
+                        <div class="card card-success card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Dropdowns</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="btn-group">
+                                    <button aria-expanded="false" class="btn btn-primary dropdown-toggle"
+                                            data-bs-toggle="dropdown" type="button">
+                                        Primary
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button aria-expanded="false" class="btn btn-secondary dropdown-toggle"
+                                            data-bs-toggle="dropdown" type="button">
+                                        Secondary
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="btn-group">
+                                    <button class="btn btn-danger" type="button">Danger Split</button>
+                                    <button aria-expanded="false"
+                                            class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" type="button"><span
+                                            class="visually-hidden">Toggle Dropdown</span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-warning" type="button">Warning Split</button>
+                                    <button aria-expanded="false"
+                                            class="btn btn-warning dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" type="button"><span
+                                            class="visually-hidden">Toggle Dropdown</span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Dropdowns--> <!--begin::List Group-->
+                        <div class="card card-warning card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">List Group</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="list-group"><a aria-current="true"
+                                                           class="list-group-item list-group-item-action active"
+                                                           href="#">
+                                    The current link item
+                                </a> <a class="list-group-item list-group-item-action" href="#">A second link item</a>
+                                    <a class="list-group-item list-group-item-action" href="#">A third link item</a> <a
+                                            class="list-group-item list-group-item-action" href="#">A fourth link
+                                        item</a> <a aria-disabled="true"
+                                                    class="list-group-item list-group-item-action disabled">A disabled
+                                        link item</a></div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::List Group--> <!--begin::Navbar-->
+                        <div class="card card-danger card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Navbar</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                                    <div class="container-fluid"><a class="navbar-brand" href="#">Navbar</a>
+                                        <button aria-controls="navbarSupportedContent" aria-expanded="false"
+                                                aria-label="Toggle navigation"
+                                                class="navbar-toggler"
+                                                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse"
+                                                type="button"><span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                <li class="nav-item"><a aria-current="page" class="nav-link active"
+                                                                        href="#">Home</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                                                <li class="nav-item dropdown"><a aria-expanded="false"
+                                                                                 class="nav-link dropdown-toggle"
+                                                                                 data-bs-toggle="dropdown"
+                                                                                 href="#"
+                                                                                 role="button">
+                                                    Dropdown
+                                                </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="#">Something else here</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item"><a aria-disabled="true" class="nav-link disabled">Disabled</a>
+                                                </li>
+                                            </ul>
+                                            <form class="d-flex" role="search"><input aria-label="Search"
+                                                                                      class="form-control me-2"
+                                                                                      placeholder="Search"
+                                                                                      type="search">
+                                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Navbar--> <!--begin::Pagination-->
+                        <div class="card card-info card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Pagination</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                                <hr>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a aria-label="Previous" class="page-link" href="#"> <span
+                                                aria-hidden="true">&laquo;</span> </a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a aria-label="Next" class="page-link" href="#"> <span
+                                                aria-hidden="true">&raquo;</span> </a></li>
+                                    </ul>
+                                </nav>
+                                <hr>
+                                <nav aria-label="...">
+                                    <ul class="pagination">
+                                        <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                                        <li aria-current="page" class="page-item active"><a class="page-link"
+                                                                                            href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Pagination--> <!--begin::Placeholder-->
+                        <div class="card card-secondary card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Placeholder</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div aria-hidden="true" class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title placeholder-glow"><span class="placeholder col-6"></span>
+                                        </h5>
+                                        <p class="card-text placeholder-glow"><span class="placeholder col-7"></span>
+                                            <span class="placeholder col-4"></span> <span
+                                                    class="placeholder col-4"></span> <span
+                                                    class="placeholder col-6"></span> <span
+                                                    class="placeholder col-8"></span></p>
+                                    </div>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Placeholder--> <!--begin::Progress-->
+                        <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Progress</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div aria-label="Success example" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="25" class="progress mb-2" role="progressbar">
+                                    <div class="progress-bar bg-success"
+                                         style="width: 25%; border-radius: 0.375rem;"></div>
+                                </div>
+                                <div aria-label="Default striped example" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="10" class="progress mb-2" role="progressbar">
+                                    <div class="progress-bar" style="width: 10%; border-radius: 0.375rem;"></div>
+                                </div>
+                                <div aria-label="Info striped example" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="50" class="progress mb-2" role="progressbar">
+                                    <div class="progress-bar progress-bar-striped bg-info"
+                                         style="width: 50%; border-radius: 0.375rem;"></div>
+                                </div>
+                                <div aria-label="Warning striped example" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="75" class="progress mb-2" role="progressbar">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                         style="width: 75%; border-radius: 0.375rem;"></div>
+                                </div>
+                                <div aria-label="Danger striped example" aria-valuemax="100" aria-valuemin="0"
+                                     aria-valuenow="100" class="progress mb-2" role="progressbar">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                                         style="width: 100%; border-radius: 0.375rem;"></div>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Progress--> <!--begin::Toast-->
+                        <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Toast</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <button class="btn btn-primary mb-2" data-bs-target="toastDefault"
+                                        data-bs-toggle="toast"
+                                        type="button">Show default toast
+                                </button>
+                                <hr>
+                                <button class="btn btn-primary mb-2" data-bs-target="toastPrimary"
+                                        data-bs-toggle="toast"
+                                        type="button">Show primary toast
+                                </button>
+                                <button class="btn btn-secondary mb-2" data-bs-target="toastSecondary"
+                                        data-bs-toggle="toast"
+                                        type="button">Show secondary toast
+                                </button>
+                                <button class="btn btn-success mb-2" data-bs-target="toastSuccess"
+                                        data-bs-toggle="toast"
+                                        type="button">Show success toast
+                                </button>
+                                <button class="btn btn-danger mb-2" data-bs-target="toastDanger" data-bs-toggle="toast"
+                                        type="button">Show danger toast
+                                </button>
+                                <button class="btn btn-warning mb-2" data-bs-target="toastWarning"
+                                        data-bs-toggle="toast"
+                                        type="button">Show warning toast
+                                </button>
+                                <button class="btn btn-info mb-2" data-bs-target="toastInfo" data-bs-toggle="toast"
+                                        type="button">Show info toast
+                                </button>
+                                <button class="btn btn-light mb-2" data-bs-target="toastLight" data-bs-toggle="toast"
+                                        type="button">Show light toast
+                                </button>
+                                <button class="btn btn-dark mb-2" data-bs-target="toastDark" data-bs-toggle="toast"
+                                        type="button">Show dark toast
+                                </button>
+                                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                    <div aria-atomic="true" aria-live="assertive" class="toast" id="toastDefault"
+                                         role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-primary"
+                                         id="toastPrimary" role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-secondary"
+                                         id="toastSecondary" role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-success"
+                                         id="toastSuccess" role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-danger"
+                                         id="toastDanger"
+                                         role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-warning"
+                                         id="toastWarning" role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-info"
+                                         id="toastInfo"
+                                         role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-light"
+                                         id="toastLight"
+                                         role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                    <div aria-atomic="true" aria-live="assertive" class="toast toast-dark"
+                                         id="toastDark"
+                                         role="alert">
+                                        <div class="toast-header"><i class="bi bi-circle me-2"></i> <strong
+                                                class="me-auto">Bootstrap</strong> <small>11 mins ago</small>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Toast--> <!--begin::Tooltip-->
+                        <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Tooltip</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <p class="muted">
+                                    Placeholder text to demonstrate some <a data-bs-title="Default tooltip"
+                                                                            data-bs-toggle="tooltip"
+                                                                            href="#">inline
+                                    links</a> with tooltips. This is now just filler, no killer.
+                                    Content placed here just to mimic the presence of <a data-bs-title="Another tooltip"
+                                                                                         data-bs-toggle="tooltip"
+                                                                                         href="#">real
+                                    text</a>. And all that just to give you an idea of how tooltips
+                                    would look when used in real-world situations. So
+                                    hopefully you've now seen how <a data-bs-title="Another one here too"
+                                                                     data-bs-toggle="tooltip"
+                                                                     href="#">these tooltips
+                                    on links</a> can work in practice, once you use them on <a
+                                        data-bs-title="The last tip!"
+                                        data-bs-toggle="tooltip"
+                                        href="#">your
+                                    own</a> site or project.
+                                </p>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Toast--> <!--begin::Spinner-->
+                        <div class="card card-success card-outline mb-4"> <!--begin::Header-->
+                            <div class="card-header">
+                                <div class="card-title">Spinner</div>
+                            </div> <!--end::Header--> <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-secondary" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-danger" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-info" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-light" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="spinner-border text-dark" role="status"><span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div> <!--end::Body-->
+                        </div> <!--end::Spinner-->
+                    </div> <!--end::Col-->
+                </div> <!--end::Row-->
+            </div> <!--end::Container-->
+        </div> <!--end::App Content-->
+    </main> <!--end::App Main--> <!--begin::Footer-->
+    <footer class="app-footer"> <!--begin::To the end-->
+        <div class="float-end d-none d-sm-inline">Anything you want</div> <!--end::To the end--> <!--begin::Copyright-->
+        <strong>
+            Copyright &copy; 2014-2024&nbsp;
+            <a class="text-decoration-none" href="https://adminlte.io">AdminLTE.io</a>.
+        </strong>
+        All rights reserved.
+        <!--end::Copyright-->
+    </footer> <!--end::Footer-->
+</div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+<script crossorigin="anonymous"
+        integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w="
+        src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"></script>
+<!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+<script crossorigin="anonymous"
+        integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I="
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+<script crossorigin="anonymous"
+        integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8="
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+<script src="../../../dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)-->
+<!--begin::OverlayScrollbars Configure-->
+<script>
+    const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
+    const Default = {
+        scrollbarTheme: "os-theme-light",
+        scrollbarAutoHide: "leave",
+        scrollbarClickScroll: true,
+    };
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        if (
+            sidebarWrapper &&
+            typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== "undefined"
+        ) {
+            OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                scrollbars: {
+                    theme: Default.scrollbarTheme,
+                    autoHide: Default.scrollbarAutoHide,
+                    clickScroll: Default.scrollbarClickScroll,
+                },
+            });
+        }
+    });
+</script> <!--end::OverlayScrollbars Configure--> <!--begin::Bootstrap Tooltips-->
+<script>
+    const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]',
+    );
+    const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
+    );
+</script> <!--end::Bootstrap Tooltips--> <!--begin::Bootstrap Toasts-->
+<script>
+    const toastTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="toast"]',
+    );
+    toastTriggerList.forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+            event.preventDefault();
+            const toastEle = document.getElementById(
+                btn.getAttribute("data-bs-target"),
+            );
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEle);
+            toastBootstrap.show();
+        });
+    });
+</script> <!--end::Bootstrap Toasts--> <!--end::Script-->
+</body><!--end::Body-->
+
+</html>

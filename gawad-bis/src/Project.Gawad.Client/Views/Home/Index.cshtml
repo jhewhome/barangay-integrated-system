@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    ViewData["HeaderTitle"] = "";
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.bootstrap5.js"></script>
+    <script src="~/app/js/home-dashboard.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "@Url.Action("GetDashboardStas", "Home")",
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    // Map JSON response to HTML elements
+                    $("#statTotalResident").text(response.residentsCount);
+                    $("#statVisitorsCount").text(response.visitorsCount);
+                    $("#statTransactionCount").text(response.transactionsCount);
+                    $("#statComplaintsCount").text(response.activeComplaintCount);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                }
+            });
+        });
+
+    </script>
+}
+
+
+@section StyleSheets
+{
+    <link rel="stylesheet" href="~/bootstrap-datatables/dataTables.bootstrap5.css" />
+    <link rel="stylesheet" href="~/app/css/complaints.css" />
+}
+
+@section NavigationCrumbs
+{
+
+}
+
+<div class="row g-4" style="overflow: scroll;">
+    <!--begin::Row-->
+    <div class="row">
+        <!--begin::Col-->
+        <div class="col-lg-3 col-6">
+            <!--begin::Small Box Widget 2-->
+            <div class="small-box text-bg-success">
+                <div class="inner">
+                    <h3 id="statTotalResident">0</h3>
+                    <p>Total Residents</p>
+                </div>
+                <i class="small-box-icon bi bi-person-add" aria-hidden="true"></i>
+                <a href="@Url.Action("Index", "Residents")"
+                   class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+                    View All <i class="bi bi-link-45deg"></i>
+                </a>
+            </div> <!--end::Small Box Widget 2-->
+        </div> <!--end::Col-->
+        <div class="col-lg-3 col-6">
+            <!--begin::Small Box Widget 4-->
+            <div class="small-box text-bg-info">
+                <div class="inner">
+                    <h3 id="statVisitorsCount">0</h3>
+                    <p>Visitors for last 7 days</p>
+                </div>
+                <i class="small-box-icon bi bi-people" aria-hidden="true"></i>
+                <a href="@Url.Action("Index", "VisitorsLog")"
+                   class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+                    View All <i class="bi bi-link-45deg"></i>
+                </a>
+            </div> <!--end::Small Box Widget 4-->
+        </div> <!--end::Col-->
+        <div class="col-lg-3 col-6">
+            <!--begin::Small Box Widget 3-->
+            <div class="small-box text-bg-danger">
+                <div class="inner">
+                    <h3 id="statComplaintsCount">0</h3>
+                    <p>Active Complaints</p>
+                </div>
+                <i class="small-box-icon bi bi-journal-text" aria-hidden="true"></i>
+                <a href="@Url.Action("Index", "Complaints")"
+                   class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+                    View All <i class="bi bi-link-45deg"></i>
+                </a>
+            </div> <!--end::Small Box Widget 3-->
+        </div> <!--end::Col-->
+        <div class="col-lg-3 col-6">
+            <!--begin::Small Box Widget 1-->
+            <div class="small-box text-bg-warning">
+                <div class="inner">
+                    <h3 id="statTransactionCount">0</h3>
+                    <p>Transactions for the last 7 days</p>
+                </div>
+                <i class="small-box-icon nav-icon bi bi-check2-all" aria-hidden="true"></i>
+                <a href="@Url.Action("Index", "Transactions")"
+                   class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+                    View All <i class="bi bi-link-45deg"></i>
+                </a>
+            </div> <!--end::Small Box Widget 1-->
+        </div> <!--end::Col-->
+    </div>
+    <!--end::Row-->
+    <!--begin::Row-->
+    <div class="row">
+        <!-- Start col -->
+        <div class="col-lg-7 connectedSortable">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Transactions for last 7 days</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tblTransactions" class="table table-striped complaint-table" data-lastndays="7"
+                           style="width:100%"></table>
+                </div>
+            </div>
+        </div>
+        <!-- /.Start col -->
+        <!-- Start col -->
+        <div class="col-lg-5 connectedSortable">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="bi bi-cake2-fill"></i> &nbsp; Birthdays</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tblBirthdays" class="table table-striped" style="width:100%"></table>
+                </div>
+            </div>
+        </div> <!-- /.Start col -->
+    </div> <!-- /.row (main row) -->
+</div>

@@ -1,0 +1,351 @@
+@using Project.Gawad.Client.Extensions
+@using Project.Gawad.Domain.Enums
+@using Project.Gawad.Domain.Enums.BusinessPermits
+@model Project.Gawad.Domain.Objects.BusinessPermit.BusinessPermitFormObject;
+
+@{
+    ViewData["Title"] = "Transactions";
+    ViewData["HeaderTitle"] = "Business Permit Application";
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="~/bootstrap-daterangepicker/daterangepicker.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2-bootstrap4.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/app/css/app.css"/>
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.bootstrap5.js"></script>
+    <script src="~/moment/moment.min.js"></script>
+    <script src="~/select2/select2.full.min.js"></script>
+    <script src="~/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/app/js/transactions-applybusinesspermit.js"></script>
+    <script src="~/app/js/person-finder.js"></script>
+}
+
+@section NavigationCrumbs {
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Transactions")">@ViewBag.Title</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @ViewBag.HeaderTitle
+        </li>
+    </ol>
+}
+
+<div class="row g-4" style="overflow: scroll;">
+    @using (Html.BeginForm("ApplyBusinessPermit",
+                "BusinessPermits",
+                FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.PersonId)
+        <div class="row">
+            <div class="card card-success card-outline mb-3">
+                <!--begin::Header-->
+                <div class="card-header">
+                    <div class="card-title"><i class="bi bi-person-fill"></i> Personal Information</div>
+                    <div class="float-end">
+                        <button
+                            type="button"
+                            class="btn p-0 border-0 bg-transparent btn-person-finder"
+                            data-bs-toggle="modal"
+                            data-bs-target=".person-finder"
+                            data-url="/BusinessPermits/ApplyBusinessPermit?residentId=">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="row g3">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.MiddleName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.LastName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Suffix, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Suffix, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Suffix, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DateOfBirth, new { @class = "form-label" })
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control datetimepicker-input", placeholder = "" })
+                                    <div class="input-group-prepend" data-target="DateOfBirth"
+                                         data-toggle="datetimepicker">
+                                        <div class="input-group-text">
+                                            <i class="bi bi-calendar-check-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "form-text field-validation-error" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.PlaceOfBirth, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.PlaceOfBirth, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.PlaceOfBirth, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Gender, new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.Gender, typeof(Gender).GetSelectListFromEnum(Model.Gender), new { @class = "form-control select2bs4 select2-danger", data_dropdown_css_class = "select2-danger" })
+                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "form-text field-validation-error" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CivilStatus, new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.CivilStatus, typeof(CivilStatus).GetSelectListFromEnum(Model.CivilStatus), new { @class = "form-control select2bs4 select2-danger", data_dropdown_css_class = "select2-danger" })
+                                @Html.ValidationMessageFor(model => model.CivilStatus, "", new { @class = "form-text field-validation-error" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Nationality, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Nationality, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.FatherName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.FatherName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.MotherMaidenName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.MotherMaidenName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.MotherMaidenName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.SpouseName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.SpouseName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.SpouseName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <!--end::Row-->
+                </div>
+                <!--end::Body-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="card card-info card-outline mb-3">
+                <!--begin::Header-->
+                <div class="card-header">
+                    <div class="card-title"><i class="bi bi-pin-map-fill"></i> Personal Address</div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            @Html.LabelFor(model => model.AddressLine1, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-5">
+                            @Html.LabelFor(model => model.AddressLine2, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Zone, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Zone, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Zone, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Barangay, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Barangay, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Barangay, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.City, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.City, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Province, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Province, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Province, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-1">
+                            @Html.LabelFor(model => model.ZipCode, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Country, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Country, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <!--end::Row-->
+                </div>
+                <!--end::Body-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="card card-warning card-outline mb-3">
+                <!--begin::Header-->
+                <div class="card-header">
+                    <div class="card-title"><i class="bi bi-pin-map-fill"></i> Business Details</div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            @Html.LabelFor(model => model.BusinessName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BusinessName, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BusinessName, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BusinessType, new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.BusinessType, typeof(BusinessType).GetSelectListFromEnum(Model.BusinessType), new { @class = "form-control select2bs4 select2-danger", data_dropdown_css_class = "select2-danger" })
+                                @Html.ValidationMessageFor(model => model.BusinessType, "", new { @class = "form-text field-validation-error" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            @Html.LabelFor(model => model.BussAddressLine1, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussAddressLine1, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussAddressLine1, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-5">
+                            @Html.LabelFor(model => model.BussAddressLine2, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussAddressLine2, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussAddressLine2, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.BussZone, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussZone, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussZone, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.BussBarangay, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussBarangay, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussBarangay, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.BussCity, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussCity, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussCity, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.BussProvince, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussProvince, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussProvince, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-1">
+                            @Html.LabelFor(model => model.BussZipCode, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussZipCode, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussProvince, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.BussCountry, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BussCountry, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.BussCountry, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <!--end::Row-->
+                </div>
+                <!--end::Body-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="card card-danger card-outline mb-3">
+                <!--begin::Header-->
+                <div class="card-header">
+                    <div class="card-title"><i class="bi bi-credit-card-2-front-fill"></i> Transaction Details</div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="row">
+                        <div class="col-md-5">
+                            @Html.LabelFor(model => model.OfficerOfTheDay, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.OfficerOfTheDay, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.OfficerOfTheDay, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ReceiptNumber, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.ReceiptNumber, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.ReceiptNumber, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Fee, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Fee, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Fee, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Notes, new { @class = "form-label" })
+                            @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <!--end::Row-->
+                </div>
+                <!--end::Body-->
+                <!--begin::Footer-->
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-10">
+
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-lg btn-danger" href="@Url.Action("Index", "Residents")">Cancel</a>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-lg btn-success" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Footer-->
+
+            </div>
+        </div>
+    }
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/PartialViews/_PersonFinderPartialView.cshtml")

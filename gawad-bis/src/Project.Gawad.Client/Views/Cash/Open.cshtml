@@ -1,0 +1,46 @@
+@model Project.Gawad.Domain.Objects.Cash.CreateCashSessionObject
+@{
+    ViewData["Title"] = "Open Cash Session";
+    ViewData["HeaderTitle"] = "Open Cash Session";
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Open Cash Session</h3>
+        </div>
+        <form asp-action="Open" method="post">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="SessionDate"></label>
+                            <input asp-for="SessionDate" class="form-control" type="date" />
+                            <span asp-validation-for="SessionDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="OpeningFloat"></label>
+                            <input asp-for="OpeningFloat" class="form-control" type="number" step="0.01" />
+                            <span asp-validation-for="OpeningFloat" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notes"></label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Open Session</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

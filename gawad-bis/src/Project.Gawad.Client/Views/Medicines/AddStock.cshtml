@@ -1,0 +1,220 @@
+@model Project.Gawad.Domain.Objects.Medicine.CreateMedicineStockObject
+@{
+    ViewData["Title"] = "Add Stock";
+    ViewData["HeaderTitle"] = "Add Medicine Stock";
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="~/select2/select2.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2-bootstrap4.min.css"/>
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Add Stock</h3>
+        </div>
+        <form asp-action="AddStock" method="post" id="addStockForm">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="MedicineId">Medicine</label>
+                            <select id="medicineSelect" class="form-control select2bs4" style="width: 100%;" data-placeholder="Type to search for a medicine..." disabled>
+                                <option></option>
+                            </select>
+                            <input type="hidden" asp-for="MedicineId" id="MedicineId" />
+                            <small class="form-text text-muted">The medicine cannot be changed when adding stock.</small>
+                            <span asp-validation-for="MedicineId" class="text-danger"></span>
+                            <div id="stockWarning" class="alert alert-warning mt-2" style="display: none;">
+                                <i class="fas fa-exclamation-triangle"></i> This medicine already has stock in inventory. Adding more stock will create a new batch entry.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Input Method is auto-assigned based on medicine's UnitOfMeasure - hidden from user -->
+                <div class="row" id="inputMethodSection" style="display: none;">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="d-block mb-2"><strong>Input Method:</strong></label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="inputMethodBoxes" name="inputMethod" class="custom-control-input" value="boxes" checked disabled>
+                                <label class="custom-control-label" for="inputMethodBoxes">By Box</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="inputMethodBottles" name="inputMethod" class="custom-control-input" value="bottles" disabled>
+                                <label class="custom-control-label" for="inputMethodBottles">By Bottle</label>
+                            </div>
+                            <!-- Per Piece option hidden - only Box and Bottle are available -->
+                            <div class="custom-control custom-radio custom-control-inline" style="display: none;">
+                                <input type="radio" id="inputMethodPieces" name="inputMethod" class="custom-control-input" value="pieces" disabled>
+                                <label class="custom-control-label" for="inputMethodPieces">Per Piece</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="piecesInputSection" style="display: none;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="quantityPieces">Quantity (Pieces)</label>
+                            <input class="form-control" type="number" step="1" min="0" id="quantityPieces" />
+                            <small class="form-text text-muted">Enter the number of individual pieces/units</small>
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ReceivedDate"></label>
+                            <input asp-for="ReceivedDate" class="form-control" type="date" />
+                            <span asp-validation-for="ReceivedDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="boxesInputSection">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numberOfBoxes">Number of Boxes</label>
+                            <input type="number" class="form-control" id="numberOfBoxes" step="1" min="1" value="1" />
+                            <small class="form-text text-muted">How many boxes? (Whole numbers only)</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="piecesPerBox">Pieces per Box</label>
+                            <input type="number" class="form-control" id="piecesPerBox" step="1" min="1" value="100" />
+                            <small class="form-text text-muted">How many pieces in each box?</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Total Pieces (Calculated)</label>
+                            <input type="number" class="form-control" id="totalPiecesFromBoxes" readonly />
+                            <small class="form-text text-muted">This will be saved as the quantity</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="bottlesInputSection" style="display: none;">
+                    <div class="col-md-12 mb-3">
+                        <div id="bottleInfoDisplay" class="alert alert-info" style="display: none;">
+                            <i class="fas fa-info-circle"></i> <strong>Bottle Information:</strong> 
+                            <span id="bottleInfoText">-</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numberOfBottles">Number of Bottles</label>
+                            <input type="number" class="form-control" id="numberOfBottles" step="0.01" min="0.01" value="1" />
+                            <small class="form-text text-muted">How many bottles?</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="piecesPerBottle">Pieces per Bottle</label>
+                            <input type="number" class="form-control" id="piecesPerBottle" step="1" min="1" value="1" />
+                            <small class="form-text text-muted">How many pieces in each bottle?</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Total Pieces (Calculated)</label>
+                            <input type="number" class="form-control" id="totalPiecesFromBottles" readonly />
+                            <small class="form-text text-muted">This will be saved as the quantity</small>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hidden quantity field that will always be submitted -->
+                <input type="hidden" asp-for="Quantity" id="quantityHidden" value="0" data-val="false" />
+                <!-- Hidden fields to store unit type and conversion info for cost calculation -->
+                <input type="hidden" id="inputUnitType" name="inputUnitType" />
+                <input type="hidden" id="inputUnitCount" name="inputUnitCount" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Supplier"><strong>Supplier / Source</strong></label>
+                            <select asp-for="Supplier" class="form-control" id="supplierSelect" style="font-size: 1rem;">
+                                <option value="">-- Select Supplier --</option>
+                                <option value="Barangay">Barangay</option>
+                                <option value="LGU">LGU (Local Government Unit)</option>
+                                <option value="DOH">DOH (Department of Health)</option>
+                                <option value="Donors">Donors / Private Organizations</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <small class="form-text text-muted">Select where this stock came from</small>
+                            <span asp-validation-for="Supplier" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ReceivedDate"><strong>Date Received</strong></label>
+                            <input asp-for="ReceivedDate" class="form-control" type="date" />
+                            <small class="form-text text-muted">When was the stock received?</small>
+                            <span asp-validation-for="ReceivedDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ExpiryDate"><strong>Expiry Date</strong></label>
+                            <input asp-for="ExpiryDate" class="form-control" type="date" />
+                            <small class="form-text text-muted">When does this stock expire?</small>
+                            <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="costUnitLabel" asp-for="CostPerUnit"><strong>Unit Price</strong></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₱</span>
+                                </div>
+                                <input asp-for="CostPerUnit" class="form-control" type="number" step="0.01" min="0" id="CostPerUnit" />
+                            </div>
+                            <small class="form-text text-muted" id="unitPriceDescription">Enter the price per unit. If left empty, the medicine's default unit price will be used.</small>
+                            <span asp-validation-for="CostPerUnit" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Price Summary Section -->
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="card card-info card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-calculator"></i> Total Price Summary</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-2">
+                                            <strong>Calculation:</strong>
+                                            <div id="summaryCalculation" class="text-muted" style="font-size: 1.1em;">Enter values above to see calculation</div>
+                                        </div>
+                                        <hr />
+                                        <h4 class="mb-0">
+                                            <strong>Total Amount:</strong>
+                                            <span id="summaryTotalAmount" class="text-primary" style="font-size: 1.5em;">₱0.00</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Add Stock</button>
+                <a href="@Url.Action("Index")" id="cancelLink" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/select2/select2.full.min.js"></script>
+    <script src="~/app/js/medicines-addstock.js"></script>
+}
+

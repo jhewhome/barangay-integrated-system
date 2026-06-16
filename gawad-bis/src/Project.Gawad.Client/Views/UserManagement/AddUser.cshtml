@@ -1,0 +1,113 @@
+@using Project.Gawad.Client.Extensions
+@using Project.Gawad.Domain.Enums
+@model Project.Gawad.Domain.Objects.UserManagement.CreateUserObject
+
+@{
+    ViewData["Title"] = "Access Management";
+    ViewData["HeaderTitle"] = "Add User";
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="~/select2/select2.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/select2/select2-bootstrap4.min.css"/>
+    <link type="text/css" rel="stylesheet" href="~/app/css/app.css"/>
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/select2/select2.full.min.js"></script>
+    <script src="~/app/js/users-addupdateuser.js"></script>
+
+}
+
+@section NavigationCrumbs
+{
+    <ol class="breadcrumb float-sm-end">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "UserManagement")">@ViewBag.Title</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @ViewBag.HeaderTitle
+        </li>
+    </ol>
+}
+
+<div class="row g-4" style="overflow: scroll;">
+    @using (Html.BeginForm("AddUser",
+                    "UserManagement",
+                    FormMethod.Post))
+    {
+        <div class="row">
+            <div class="card card-success card-outline mb-3">
+                <!--begin::Header-->
+                <div class="card-header">
+                    <div class="card-title"><i class="bi bi-file-person-fill"></i>User Details</div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="row g3">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Firstname, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Lastname, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "form-text field-validation-error" })
+                        </div>
+                    </div>
+                    <!--end::Row-->
+                    <!--begin::Row-->
+                    <div class="row g3">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Username, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "form-text field-validation-error" })
+                        </div>
+
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Password, new { @class = "form-label" })
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Leave blank to use default password", autocomplete = "new-password" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "form-text field-validation-error" })
+                            <div class="form-text text-muted">
+                                Optional. If left blank, the default password <strong>P@ssw0rd123!</strong> is assigned.
+                                Users can change it later under Profile → Change Password.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Role, new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.Role, typeof(RoleType).GetSelectListFromEnum(Model.Role), new { @class = "form-control select2bs4 select2-danger", data_dropdown_css_class = "select2-danger" })
+                                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "form-text field-validation-error" })
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Row-->
+                </div>
+                <!--end::Body-->
+                <!--begin::Footer-->
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-10">
+
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-lg btn-danger" href="@Url.Action("Index", "UserManagement")">Cancel</a>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-lg btn-success" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Footer-->
+            </div>
+        </div>
+    }
+</div>

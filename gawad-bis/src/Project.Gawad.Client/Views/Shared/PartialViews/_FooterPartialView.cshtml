@@ -1,0 +1,12 @@
+@using Microsoft.Extensions.Options
+@using Project.Gawad.Application.Options
+@inject IOptions<AppConfigOption> AppConfigOption
+
+<footer class="app-footer">
+    <strong>
+        PUP - MSIT &copy; Copyright 2024&nbsp;
+    </strong>
+    <div class="float-end d-none d-sm-inline" style="font-style: italic;">version @AppConfigOption.Value.Version</div>
+    <div class="clearfix"></div>
+</footer>
+

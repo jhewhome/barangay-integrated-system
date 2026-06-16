@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Client", "Project.Gawad.Client\Project.Gawad.Client.csproj", "{3B82F061-D7AD-42A8-BC8E-33912E4B52A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Core", "Project.Gawad.Core\Project.Gawad.Core.csproj", "{FEE2DF3F-63D6-451F-BFDD-7439188F7D7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Domain", "Project.Gawad.Domain\Project.Gawad.Domain.csproj", "{226704A9-DCFD-4186-A315-AFDAC5214820}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Infrastructure", "Project.Gawad.Infrastructure\Project.Gawad.Infrastructure.csproj", "{F70728A5-23A6-4B8B-B544-39DF1AEA061D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D796DD3D-D90B-4EC3-AECE-4B978D31BBE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A7A045A6-11CE-46E5-AAC8-4E26127A4C49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution_items", "solution_items", "{5E7FC998-3E97-4B83-85C0-3BE300767C96}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Tests", "..\tests\Project.Gawad.Tests\Project.Gawad.Tests.csproj", "{0BA30107-D8DA-46A8-9816-39A8929826CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Application", "Project.Gawad.Application\Project.Gawad.Application.csproj", "{FB8FFF1E-B635-44C9-A676-EC22E12C8CFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.IntegrationTests", "..\tests\Project.Gawad.IntegrationTests\Project.Gawad.IntegrationTests.csproj", "{4BE7B9C4-D833-465D-BE27-C9F76528AD27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Gawad.Data.MongoDb", "Project.Gawad.Data.MongoDb\Project.Gawad.Data.MongoDb.csproj", "{3BF357A2-79D5-470D-9E07-E7120A764022}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B82F061-D7AD-42A8-BC8E-33912E4B52A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B82F061-D7AD-42A8-BC8E-33912E4B52A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B82F061-D7AD-42A8-BC8E-33912E4B52A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B82F061-D7AD-42A8-BC8E-33912E4B52A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEE2DF3F-63D6-451F-BFDD-7439188F7D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEE2DF3F-63D6-451F-BFDD-7439188F7D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEE2DF3F-63D6-451F-BFDD-7439188F7D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEE2DF3F-63D6-451F-BFDD-7439188F7D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{226704A9-DCFD-4186-A315-AFDAC5214820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226704A9-DCFD-4186-A315-AFDAC5214820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226704A9-DCFD-4186-A315-AFDAC5214820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226704A9-DCFD-4186-A315-AFDAC5214820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70728A5-23A6-4B8B-B544-39DF1AEA061D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70728A5-23A6-4B8B-B544-39DF1AEA061D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70728A5-23A6-4B8B-B544-39DF1AEA061D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70728A5-23A6-4B8B-B544-39DF1AEA061D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA30107-D8DA-46A8-9816-39A8929826CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA30107-D8DA-46A8-9816-39A8929826CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA30107-D8DA-46A8-9816-39A8929826CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA30107-D8DA-46A8-9816-39A8929826CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8FFF1E-B635-44C9-A676-EC22E12C8CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8FFF1E-B635-44C9-A676-EC22E12C8CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8FFF1E-B635-44C9-A676-EC22E12C8CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8FFF1E-B635-44C9-A676-EC22E12C8CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE7B9C4-D833-465D-BE27-C9F76528AD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE7B9C4-D833-465D-BE27-C9F76528AD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE7B9C4-D833-465D-BE27-C9F76528AD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE7B9C4-D833-465D-BE27-C9F76528AD27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF357A2-79D5-470D-9E07-E7120A764022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF357A2-79D5-470D-9E07-E7120A764022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF357A2-79D5-470D-9E07-E7120A764022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF357A2-79D5-470D-9E07-E7120A764022}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B82F061-D7AD-42A8-BC8E-33912E4B52A7} = {A7A045A6-11CE-46E5-AAC8-4E26127A4C49}
+		{FEE2DF3F-63D6-451F-BFDD-7439188F7D7B} = {A7A045A6-11CE-46E5-AAC8-4E26127A4C49}
+		{226704A9-DCFD-4186-A315-AFDAC5214820} = {A7A045A6-11CE-46E5-AAC8-4E26127A4C49}
+		{F70728A5-23A6-4B8B-B544-39DF1AEA061D} = {A7A045A6-11CE-46E5-AAC8-4E26127A4C49}
+		{0BA30107-D8DA-46A8-9816-39A8929826CA} = {D796DD3D-D90B-4EC3-AECE-4B978D31BBE2}
+		{FB8FFF1E-B635-44C9-A676-EC22E12C8CFF} = {A7A045A6-11CE-46E5-AAC8-4E26127A4C49}
+		{4BE7B9C4-D833-465D-BE27-C9F76528AD27} = {D796DD3D-D90B-4EC3-AECE-4B978D31BBE2}
+		{3BF357A2-79D5-470D-9E07-E7120A764022} = {A7A045A6-11CE-46E5-AAC8-4E26127A4C49}
+	EndGlobalSection
+EndGlobal

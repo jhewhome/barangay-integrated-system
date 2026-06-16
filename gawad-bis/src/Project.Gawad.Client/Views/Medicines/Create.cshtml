@@ -1,0 +1,152 @@
+@model Project.Gawad.Domain.Objects.Medicine.CreateMedicineObject
+@using Project.Gawad.Core.Extensions
+@{
+    ViewData["Title"] = "Add Medicine";
+    ViewData["HeaderTitle"] = "Add New Medicine";
+}
+
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Medicine Information</h3>
+        </div>
+        <form asp-action="Create" method="post">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" style="position: relative;">
+                            <label for="medicineNameInput">Medicine Name</label>
+                            <input asp-for="Name" class="form-control" id="medicineNameInput" autocomplete="off" />
+                            <div id="medicineNameSuggestions"></div>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <div id="duplicateMedicineError" class="alert alert-danger mt-2" style="display: none;">
+                                <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> This medicine name already exists in the system. You cannot add a duplicate medicine name.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Category"></label>
+                            <select asp-for="Category" class="form-control">
+                                <option value="">-- Select Category --</option>
+                                @foreach (Project.Gawad.Domain.Enums.Medicine.MedicineCategory cat in Enum.GetValues(typeof(Project.Gawad.Domain.Enums.Medicine.MedicineCategory)))
+                                {
+                                    <option value="@cat">@cat.GetEnumDisplayName()</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="UnitOfMeasure"></label>
+                            <select asp-for="UnitOfMeasure" class="form-control" id="unitOfMeasureSelect">
+                                <option value="">-- Select Unit of Measure --</option>
+                                <option value="@Project.Gawad.Domain.Enums.Medicine.UnitOfMeasure.Box">Box</option>
+                                <option value="@Project.Gawad.Domain.Enums.Medicine.UnitOfMeasure.Bottle">Bottle</option>
+                            </select>
+                            <span asp-validation-for="UnitOfMeasure" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="unitPriceInput" id="unitPriceLabel">Unit Price</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₱</span>
+                                </div>
+                                <input asp-for="UnitPrice" class="form-control" type="number" step="0.01" min="0" id="unitPriceInput" />
+                            </div>
+                            <small class="form-text text-muted" id="unitPriceDescription">Enter the price per unit (box, bottle, piece, etc.)</small>
+                            <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="MinimumStockLevel"></label>
+                            <input asp-for="MinimumStockLevel" class="form-control" type="number" />
+                            <span asp-validation-for="MinimumStockLevel" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="boxContentSection" style="display: none;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="BoxContentType">Box Content Type</label>
+                            <select asp-for="BoxContentType" class="form-control" id="boxContentType">
+                                <option value="">-- Select Content Type --</option>
+                                <option value="tablet">Tablet</option>
+                                <option value="capsule">Capsule</option>
+                                <option value="solution">Solution</option>
+                                <option value="cream">Cream</option>
+                            </select>
+                            <small class="form-text text-muted">Specify the content type inside the box</small>
+                            <span asp-validation-for="BoxContentType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="boxContentValue" id="boxContentValueLabel">Pieces per Box</label>
+                            <input asp-for="BoxContentValue" class="form-control" type="number" step="1" min="1" id="boxContentValue" />
+                            <small class="form-text text-muted">Enter the number of pieces (tablets/capsules/etc.) per box</small>
+                            <span asp-validation-for="BoxContentValue" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="bottleMeasurementSection" style="display: none;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="BottleMeasurementType">Bottle Content Type</label>
+                            <select asp-for="BottleMeasurementType" class="form-control" id="bottleMeasurementType">
+                                <option value="">-- Select Type --</option>
+                                <option value="mg">MG (Milligrams) - for capsules/tablets</option>
+                                <option value="ml">ML (Milliliters) - for liquid</option>
+                            </select>
+                            <small class="form-text text-muted">Specify if the bottle contains capsules/tablets (MG) or liquid (ML)</small>
+                            <span asp-validation-for="BottleMeasurementType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="bottleMeasurementValue" id="bottleMeasurementValueLabel">Measurement Value</label>
+                            <div class="input-group">
+                                <input asp-for="BottleMeasurementValue" class="form-control" type="number" step="0.01" min="0.01" id="bottleMeasurementValue" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="bottleMeasurementUnit">mg/ml</span>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted">Enter the amount per bottle (e.g., 100, 200)</small>
+                            <span asp-validation-for="BottleMeasurementValue" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="@Url.ActionLink("Index")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/app/js/medicines-create.js"></script>
+}
+

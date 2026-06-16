@@ -1,0 +1,39 @@
+---
+title: BHC System — Queue Ticket Lifecycle
+config:
+  theme: base
+  themeVariables:
+    fontSize: 16px
+    fontFamily: Segoe UI, system-ui, sans-serif
+  state:
+    nodeSpacing: 50
+    rankSpacing: 60
+---
+
+stateDiagram-v2
+    direction LR
+
+    [*] --> waiting: Registration creates ticket<br/>routed to station
+
+    waiting --> serving: Staff: Call next / Call
+    serving --> done: Staff: Complete
+    serving --> skipped: Staff: Skip
+
+    skipped --> waiting: Recall to queue<br/>same day · same station
+
+    done --> serving: Auto-call next waiting<br/>if station idle
+    skipped --> serving: Auto-call next waiting<br/>if station idle
+
+    done --> [*]: No more patients
+    skipped --> [*]: End of day / left site
+    serving --> [*]: Station closed / end of day
+
+    note right of waiting
+        One ticket per station per day
+        Prefix: TR, CN, PH, etc.
+    end note
+
+    note right of serving
+        Only ONE serving
+        per station at a time
+    end note

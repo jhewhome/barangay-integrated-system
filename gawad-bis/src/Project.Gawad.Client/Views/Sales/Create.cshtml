@@ -1,0 +1,49 @@
+@model Project.Gawad.Domain.Objects.Sales.CreateSaleObject
+@{
+    ViewData["Title"] = "Create Sale";
+    ViewData["HeaderTitle"] = "New Sale";
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">Create Sale</h3>
+        </div>
+        <form asp-action="Create" method="post">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="SaleDate"></label>
+                            <input asp-for="SaleDate" class="form-control" type="datetime-local" />
+                            <span asp-validation-for="SaleDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="CustomerName"></label>
+                            <input asp-for="CustomerName" class="form-control" />
+                            <span asp-validation-for="CustomerName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notes"></label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> Sale items management will be implemented in the next phase.
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Create Sale</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,98 @@
+# =============================================================================
+# Barangay Integrated System — monorepo .gitignore
+# Repo: C:\PUP\barangay-integrated-system-repo
+# Covers: bhc-system/ (PHP) + gawad-bis/ (.NET)
+# =============================================================================
+
+# --- Secrets & local config (never commit) ---
+bhc-system/config/gawad_integration.local.php
+bhc-system/config/database.infinityfree.php
+gawad-bis/**/appsettings.Development.json
+gawad-bis/**/appsettings.Local.json
+gawad-bis/**/secrets.json
+.env
+.env.*
+!.env.example
+
+# --- BHC deploy output ---
+bhc-system/deploy/infinityfree/package/
+
+# --- PHP ---
+bhc-system/vendor/
+bhc-system/.phpunit.result.cache
+
+# --- .NET / Visual Studio (Gawad BIS) ---
+**/[Bb]in/
+**/[Oo]bj/
+**/[Ll]og/
+**/[Ll]ogs/
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.nupkg
+*.snupkg
+*.binlog
+*.cache
+*.log
+*.pdb
+*.dbmdl
+*.publishsettings
+*.pubxml
+*.publishproj
+PublishScripts/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+_ReSharper*/
+*.DotSettings.user
+.idea/
+*.sln.iml
+
+# Gawad front-end build artifacts
+gawad-bis/**/node_modules/
+gawad-bis/**/wwwroot/dist/
+gawad-bis/**/package-lock.json
+
+# --- OS & editor ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+*.swp
+*.swo
+*~
+.history/
+*.code-workspace
+
+# --- Cursor / VS Code (optional local settings) ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# --- Test & coverage ---
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+coverage*/
+*.coverage
+*.coveragexml
+
+# --- Archives & temp ---
+*.zip
+*.7z
+*.rar
+*.tmp
+*.temp
+bhc-system/scripts/_c.txt

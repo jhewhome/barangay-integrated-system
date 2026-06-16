@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Visitors Log";
+    ViewData["HeaderTitle"] = "Visitors";
+}
+
+@section StyleSheets
+{
+    <link type="text/css" rel="stylesheet" href="../bootstrap-datatables/dataTables.bootstrap5.css"/>
+    <link rel="stylesheet" href="~/app/css/complaints.css" />
+}
+
+@section Scripts
+{
+    <script src="~/bootstrap-datatables/jquery-3.7.1.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.bootstrap5.js"></script>
+    <script src="~/bootstrap-datatables/dataTables.buttons.js"></script>
+    <script src="~/bootstrap-datatables/buttons.dataTables.js"></script>
+    <script src="~/bootstrap-datatables/jszip.min.js"></script>
+    <script src="~/bootstrap-datatables/pdfmake.min.js"></script>
+    <script src="~/bootstrap-datatables/vfs_fonts.js"></script>
+    <script src="~/bootstrap-datatables/buttons.html5.min.js"></script>
+    <script src="~/bootstrap-datatables/buttons.print.min.js"></script>
+    <script src="~/app/js/visitorslog-index.js"></script>
+}
+
+@section NavigationCrumbs
+{
+
+}
+
+<div class="col-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <h3 class="card-title"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="tblMain" class="table table-striped complaint-table" style="width:100%"></table>
+        </div>
+    </div>
+</div>
